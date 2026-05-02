@@ -98,15 +98,16 @@ export default function BookAppointment({ route, navigation }) {
     // Mock user (no real auth)
     const user = { uid: "mock-user" };
 
-    useEffect(() => {
-        const fetchData = async () => {
-            if (selectedDate) {
-                await getTimeListFromDatabase(doctor.name, selectedDate);
-            }
-        };
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         if (selectedDate) {
+    //             setServiceTimeList([]);
+    //             await getTimeListFromDatabase(doctor.name, selectedDate);
+    //         }
+    //     };
 
-        fetchData();
-    }, [selectedDate, doctor?.name]);
+    //     fetchData();
+    // }, [selectedDate, doctor?.name]);
 
     const handleBooking = () => {
         if (selectedDate && selectedTime && user) {
@@ -159,11 +160,12 @@ export default function BookAppointment({ route, navigation }) {
 
     const onDateSelect = async (day) => {
         try {
+            setServiceTimeList([]);
             setLoading(true);
             setSelectedDate(day.dateString);
 
             await getTimeListFromDatabase(doctor.name, day.dateString);
-            console.log("Time list after fetching:", timeList);
+            // console.log("Time list after fetching:", timeList);
             await getServiceAppointments(day.dateString);
         } catch (error) {
             console.error(error);

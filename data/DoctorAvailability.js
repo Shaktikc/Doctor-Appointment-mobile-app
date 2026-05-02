@@ -118,18 +118,25 @@ export const getAvailableSlotsForDoctor = (doctorName, dateString) => {
     const doctor = DOCTOR_AVAILABILITY.find((d) => d.name === doctorName);
     if (!doctor) return [];
 
-    // Get day of week in doctor's timezone
     const dayOfWeek = getDayOfWeekInTimezone(dateString, doctor.timezone);
 
-    console.log(`Doctor: ${doctorName}, Timezone: ${doctor.timezone}, Date: ${dateString}, Day in TZ: ${dayOfWeek}`);
+    const daySchedules = doctor.schedule.filter(
+        (s) => s.day_of_week === dayOfWeek
+    );
 
-    const daySchedule = doctor.schedule.find((s) => s.day_of_week === dayOfWeek);
-    if (!daySchedule) {
-        console.log(`No schedule found for ${dayOfWeek}`);
-        return [];
-    }
+    if (!daySchedules.length) return [];
 
-    return generateTimeSlots(daySchedule.available_at, daySchedule.available_until);
+    let allSlots = [];
+
+    daySchedules.forEach((schedule) => {
+        const slots = generateTimeSlots(
+            schedule.available_at,
+            schedule.available_until
+        );
+        allSlots = [...allSlots, ...slots];
+    });
+console.log(`Generated slots for ${doctorName} on ${dateString} (${dayOfWeek}):`, allSlots, "khj;lkj;lkjlk");
+    return allSlots;
 };
 
 /**

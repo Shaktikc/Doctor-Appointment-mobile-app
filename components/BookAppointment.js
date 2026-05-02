@@ -16,29 +16,22 @@ import { showTopMessage } from "./ErrorHandler";
 import TimeSlot from "./TimeSlot";
 import { getAvailableSlotsForDoctor } from "../data/DoctorAvailability";
 
-// Example of pre-booked appointments in the system (mock)
-const MOCK_APPOINTMENTS = [
-    {
-        userId: "user1",
-        serviceId: "1",
-        appType: "Cardiology",
-        bookedDate: moment().format("YYYY-MM-DD"),
-        bookedTime: "09:00",
-    },
-];
+// // Example of pre-booked appointments in the system (mock)
+// const MOCK_APPOINTMENTS = [
+//     {
+//         userId: "user1",
+//         serviceId: "1",
+//         appType: "Cardiology",
+//         bookedDate: moment().format("YYYY-MM-DD"),
+//         bookedTime: "09:00",
+//     },
+// ];
 import { Ionicons } from "@expo/vector-icons";
 
-// Fallback doctor when navigation params are missing
-const DEFAULT_DOCTOR = {
-    id: "1",
-    name: "Demo Doctor",
-    categories: ["General"],
-    location: "—",
-    photo: "https://via.placeholder.com/100",
-};
+
 
 export default function BookAppointment({ route, navigation }) {
-    const doctor = route?.params?.doctor ?? DEFAULT_DOCTOR;
+    const doctor = route?.params?.doctor ;
     const serviceId = doctor.id;
     const scrollViewRef = useRef(null);
 

@@ -29,14 +29,17 @@ export default function BookAppointment({ route, navigation }) {
     const [selectedTime, setSelectedTime] = useState(null);
     const [timeList, setTimeList] = useState([]);
     const [serviceTimeList, setServiceTimeList] = useState([]);
-    const [bookedApps, setBookedApps] = useState([]);
+
 
     const today = moment().format("YYYY-MM-DD");
     const threeMonthsLater = moment().add(3, "months").format("YYYY-MM-DD");
 
+    console.log("nicee", serviceTimeList);
+
     // Get available time slots for the selected doctor on a specific date
     const getTimeListFromDatabase = async (doctorName, dateString) => {
         setLoading(true);
+           setServiceTimeList([]);
         try {
             // Simulate fetch delay
             await new Promise((res) => setTimeout(res, 200));
@@ -72,7 +75,7 @@ export default function BookAppointment({ route, navigation }) {
                 (app) => app.serviceId === serviceId && app.bookedDate === day
             );
 
-            setBookedApps(serviceBookings);
+            // setBookedApps(serviceBookings);
 
             const availableTimes = timeList.map((time) => {
                 const bookedHour = serviceBookings.some(
@@ -98,65 +101,7 @@ export default function BookAppointment({ route, navigation }) {
     // Mock user (no real auth)
     const user = { uid: "mock-user" };
 
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         if (selectedDate) {
-    //             setServiceTimeList([]);
-    //             await getTimeListFromDatabase(doctor.name, selectedDate);
-    //         }
-    //     };
 
-    //     fetchData();
-    // }, [selectedDate, doctor?.name]);
-
-    const handleBooking = () => {
-        if (selectedDate && selectedTime && user) {
-            Alert.alert(
-                "Confirm Booking",
-                "Your appointment will be created, are you sure?",
-                [
-                    {
-                        text: "Cancel",
-                        style: "cancel",
-                    },
-                    {
-                        text: "Book",
-                        onPress: () => {
-                            pushAppointment();
-                        },
-                    },
-                ]
-            );
-        } else {
-            if (!user) {
-                showTopMessage("You are not logged in", "success");
-                goToLoginScreen();
-            } else if (!selectedDate || !selectedTime) {
-                showTopMessage("Please select a date and time.", "info");
-            }
-        }
-    };
-
-    // Simulate pushing appointment to backend by updating local state
-    const pushAppointment = () => {
-        const newApp = {
-            userId: user.uid,
-            serviceId: doctor.id,
-            appType: doctor.categories[0],
-            bookedDate: selectedDate,
-            bookedTime: selectedTime,
-        };
-
-        // update local booked apps
-        setBookedApps((prev) => [...prev, newApp]);
-
-        showTopMessage("Your appointment has been created!", "success");
-
-
-        goToCompletedScreen();
-        setSelectedTime(null);
-        setSelectedDate(null);
-    };
 
     const onDateSelect = async (day) => {
         try {
@@ -279,9 +224,9 @@ export default function BookAppointment({ route, navigation }) {
                     </View>
                 )}
             </ScrollView>
-            <View style={styles.button_container}>
+            {/* <View style={styles.button_container}>
                 <Button text={"Book"} onPress={handleBooking} />
-            </View>
+            </View> */}
         </View>
     );
 }

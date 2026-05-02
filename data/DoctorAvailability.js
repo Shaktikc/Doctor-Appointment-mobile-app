@@ -135,7 +135,7 @@ export const getAvailableSlotsForDoctor = (doctorName, dateString) => {
         );
         allSlots = [...allSlots, ...slots];
     });
-console.log(`Generated slots for ${doctorName} on ${dateString} (${dayOfWeek}):`, allSlots, "khj;lkj;lkjlk");
+
     return allSlots;
 };
 

@@ -40,21 +40,18 @@ const MOCK_APPOINTMENTS = [
 ];
 import { Ionicons } from "@expo/vector-icons";
 
-
-import userImages from "./utils/UserImageUtils";
-
-// Fallback item when navigation params are missing
-const DEFAULT_ITEM = {
+// Fallback doctor when navigation params are missing
+const DEFAULT_DOCTOR = {
     id: "1",
-    firstName: "Demo",
-    lastName: "Doctor",
-    expert_area: "Genel",
-    district: "—",
+    name: "Demo Doctor",
+    categories: ["General"],
+    location: "—",
+    photo: "https://via.placeholder.com/100",
 };
 
 export default function BookAppointment({ route, navigation }) {
-    const item = route?.params?.item ?? DEFAULT_ITEM;
-    const serviceId = item.id;
+    const doctor = route?.params?.doctor ?? DEFAULT_DOCTOR;
+    const serviceId = doctor.id;
     const scrollViewRef = useRef(null);
 
     const [loading, setLoading] = useState(true);
@@ -158,8 +155,8 @@ export default function BookAppointment({ route, navigation }) {
     const pushAppointment = () => {
         const newApp = {
             userId: user.uid,
-            serviceId: item.id,
-            appType: item.expert_area,
+            serviceId: doctor.id,
+            appType: doctor.categories[0],
             bookedDate: selectedDate,
             bookedTime: selectedTime,
         };
@@ -217,15 +214,15 @@ export default function BookAppointment({ route, navigation }) {
                 <View style={styles.header_container}>
                     <Image
                         style={styles.image_container}
-                        source={userImages[item.id]}
+                        source={{ uri: doctor.photo }}
                     />
                     <View>
                         <View style={styles.title_container}>
                             <Text style={styles.title}>
-                                {item.firstName} {item.lastName}
+                                {doctor.name}
                             </Text>
                             <Text style={styles.about}>
-                                {item.expert_area} Uzmanı
+                                {doctor.categories[0]} Uzmanı
                             </Text>
                         </View>
                         <View style={styles.location_container}>
@@ -234,7 +231,7 @@ export default function BookAppointment({ route, navigation }) {
                                 size={18}
                                 color={colors.color_primary}
                             />
-                            <Text style={styles.location}>{item.district}</Text>
+                            <Text style={styles.location}>{doctor.location}</Text>
                         </View>
                     </View>
                 </View>

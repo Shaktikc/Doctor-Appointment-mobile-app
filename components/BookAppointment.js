@@ -15,17 +15,6 @@ import { colors } from "./styles/Theme";
 import { showTopMessage } from "./ErrorHandler";
 import TimeSlot from "./TimeSlot";
 import { getAvailableSlotsForDoctor } from "../data/DoctorAvailability";
-
-// // Example of pre-booked appointments in the system (mock)
-// const MOCK_APPOINTMENTS = [
-//     {
-//         userId: "user1",
-//         serviceId: "1",
-//         appType: "Cardiology",
-//         bookedDate: moment().format("YYYY-MM-DD"),
-//         bookedTime: "09:00",
-//     },
-// ];
 import { Ionicons } from "@expo/vector-icons";
 
 
@@ -35,7 +24,7 @@ export default function BookAppointment({ route, navigation }) {
     const serviceId = doctor.id;
     const scrollViewRef = useRef(null);
 
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTime, setSelectedTime] = useState(null);
     const [timeList, setTimeList] = useState([]);
@@ -117,7 +106,7 @@ export default function BookAppointment({ route, navigation }) {
         };
 
         fetchData();
-    }, [selectedDate, doctor.name]);
+    }, [selectedDate, doctor?.name]);
 
     const handleBooking = () => {
         if (selectedDate && selectedTime && user) {

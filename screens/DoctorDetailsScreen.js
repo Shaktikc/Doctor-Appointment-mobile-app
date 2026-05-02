@@ -17,9 +17,9 @@ const DoctorDetailsScreen = ({ route }) => {
   const { doctor } = route.params ?? {};
   const navigation = useNavigation(); // Initialize navigation
 
-  const handleViewProfile = () => {
-    // Navigate to the DoctorDetails screen with the selected doctor's data
-    navigation.navigate("Doctor Lists", { doctor });
+  const handleBookAppointment = () => {
+    // Navigate to the Appointment Booking screen with the selected doctor's data
+    navigation.navigate("Book Appointment", { doctor });
   };
 
   return (
@@ -120,8 +120,8 @@ const DoctorDetailsScreen = ({ route }) => {
             </View>
 
             {/* Button to Book an Appointment */}
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.bookAppointmentButton}>
+            <View style={styles.buttonContainer}  >
+              <TouchableOpacity style={styles.bookAppointmentButton}  onPress={handleBookAppointment}>
                 <Text style={styles.bookAppointmentText}>Book Appointment</Text>
               </TouchableOpacity>
             </View>

@@ -7,13 +7,13 @@ import {
     Alert,
     ActivityIndicator,
 } from "react-native";
-import Button from "../components/Button/Button";
+import Button from "./Button/Button";
 import React, { useState, useEffect, useRef } from "react";
 import { Calendar } from "react-native-calendars";
 import moment from "moment";
-import { colors } from "../components/styles/Theme";
-import { showTopMessage } from "../components/ErrorHandler";
-import TimeSlot from "../components/TimeSlot";
+import { colors } from "./styles/Theme";
+import { showTopMessage } from "./ErrorHandler";
+import TimeSlot from "./TimeSlot";
 // Mock data to replace API/database calls
 const MOCK_TIMES = [
     { id: 1, apptime: "09:00" },
@@ -41,7 +41,7 @@ const MOCK_APPOINTMENTS = [
 import { Ionicons } from "@expo/vector-icons";
 
 
-import userImages from "../components/utils/UserImageUtils";
+import userImages from "./utils/UserImageUtils";
 
 // Fallback item when navigation params are missing
 const DEFAULT_ITEM = {
@@ -52,7 +52,7 @@ const DEFAULT_ITEM = {
     district: "—",
 };
 
-export default function ServiceBookingScreen({ route, navigation }) {
+export default function BookAppointment({ route, navigation }) {
     const item = route?.params?.item ?? DEFAULT_ITEM;
     const serviceId = item.id;
     const scrollViewRef = useRef(null);

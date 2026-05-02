@@ -14,19 +14,7 @@ import moment from "moment";
 import { colors } from "./styles/Theme";
 import { showTopMessage } from "./ErrorHandler";
 import TimeSlot from "./TimeSlot";
-// Mock data to replace API/database calls
-const MOCK_TIMES = [
-    { id: 1, apptime: "09:00" },
-    { id: 2, apptime: "09:30" },
-    { id: 3, apptime: "10:00" },
-    { id: 4, apptime: "10:30" },
-    { id: 5, apptime: "11:00" },
-    { id: 6, apptime: "11:30" },
-    { id: 7, apptime: "13:00" },
-    { id: 8, apptime: "13:30" },
-    { id: 9, apptime: "14:00" },
-    { id: 10, apptime: "14:30" },
-];
+import { getAvailableSlotsForDoctor } from "../data/DoctorAvailability";
 
 // Example of pre-booked appointments in the system (mock)
 const MOCK_APPOINTMENTS = [
@@ -64,18 +52,28 @@ export default function BookAppointment({ route, navigation }) {
     const today = moment().format("YYYY-MM-DD");
     const threeMonthsLater = moment().add(3, "months").format("YYYY-MM-DD");
 
-    // Mock user (no real auth)
-    const user = { uid: "mock-user" };
-
-    // Replace DB call with mock time list
-    const getTimeListFromDatabase = async () => {
+    // Get available time slots for the selected doctor on a specific date
+    const getTimeListFromDatabase = async (doctorName, dateString) => {
         setLoading(true);
         try {
-            // simulate fetch delay
+            // Simulate fetch delay
             await new Promise((res) => setTimeout(res, 200));
-            setTimeList(MOCK_TIMES);
+            
+            // Get available slots for this doctor on this date
+            const availableSlots = getAvailableSlotsForDoctor(doctorName, dateString);
+
+            console.log(`Available slots for ${doctorName} on ${dateString}:`, availableSlots);
+            
+            // Convert to the expected format with id and apptime
+            const formattedTimes = availableSlots.map((time, index) => ({
+                id: index + 1,
+                apptime: time,
+            }));
+            
+            setTimeList(formattedTimes);
         } catch (error) {
             console.error(error);
+            setTimeList([]);
         } finally {
             setLoading(false);
         }
@@ -115,13 +113,18 @@ export default function BookAppointment({ route, navigation }) {
     };
 
 
+    // Mock user (no real auth)
+    const user = { uid: "mock-user" };
+
     useEffect(() => {
         const fetchData = async () => {
-            await getTimeListFromDatabase();
+            if (selectedDate) {
+                await getTimeListFromDatabase(doctor.name, selectedDate);
+            }
         };
 
         fetchData();
-    }, [selectedDate]);
+    }, [selectedDate, doctor.name]);
 
     const handleBooking = () => {
         if (selectedDate && selectedTime && user) {
@@ -177,7 +180,7 @@ export default function BookAppointment({ route, navigation }) {
             setLoading(true);
             setSelectedDate(day.dateString);
 
-            await getTimeListFromDatabase();
+            await getTimeListFromDatabase(doctor.name, day.dateString);
             await getServiceAppointments(day.dateString);
         } catch (error) {
             console.error(error);

@@ -26,7 +26,7 @@ export default function BookAppointment({ route, navigation }) {
     const [loading, setLoading] = useState(false);
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTime, setSelectedTime] = useState(null);
-    const [timeList, setTimeList] = useState([]);
+
     const [serviceTimeList, setServiceTimeList] = useState([]);
 
     const today = moment().format("YYYY-MM-DD");
@@ -97,7 +97,7 @@ export default function BookAppointment({ route, navigation }) {
                 day.dateString
             );
 
-            setTimeList(timeListData);
+            
 
             await getServiceAppointments(
                 day.dateString,

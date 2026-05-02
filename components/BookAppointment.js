@@ -44,7 +44,7 @@ export default function BookAppointment({ route, navigation }) {
             // Get available slots for this doctor on this date
             const availableSlots = getAvailableSlotsForDoctor(doctorName, dateString);
 
-            console.log(`Available slots for ${doctorName} on ${dateString}:`, availableSlots);
+            // console.log(`Available slots for ${doctorName} on ${dateString}:`, availableSlots);
             
             // Convert to the expected format with id and apptime
             const formattedTimes = availableSlots.map((time, index) => ({
@@ -67,7 +67,7 @@ export default function BookAppointment({ route, navigation }) {
         setServiceTimeList([]);
         try {
             // gather mock + local booked apps
-            const allBookings = [...MOCK_APPOINTMENTS, ...bookedApps];
+            const allBookings = [ ...bookedApps];
             const serviceBookings = allBookings.filter(
                 (app) => app.serviceId === serviceId && app.bookedDate === day
             );
@@ -163,6 +163,7 @@ export default function BookAppointment({ route, navigation }) {
             setSelectedDate(day.dateString);
 
             await getTimeListFromDatabase(doctor.name, day.dateString);
+            console.log("Time list after fetching:", timeList);
             await getServiceAppointments(day.dateString);
         } catch (error) {
             console.error(error);

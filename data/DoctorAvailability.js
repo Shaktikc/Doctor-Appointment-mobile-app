@@ -139,13 +139,3 @@ export const getAvailableSlotsForDoctor = (doctorName, dateString) => {
     return allSlots;
 };
 
-/**
- * Get doctor availability info by name
- * @param {string} doctorName - Name of the doctor
- * @returns {object} Doctor availability object or null
- */
-export const getDoctorAvailability = (doctorName) => {
-    return DOCTOR_AVAILABILITY.find((d) => d.name === doctorName) || null;
-};
-
-export default DOCTOR_AVAILABILITY;

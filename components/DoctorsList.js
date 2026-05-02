@@ -16,28 +16,42 @@ const DoctorsList = () => {
       id: "1",
       image:
         "https://images.pexels.com/photos/8460157/pexels-photo-8460157.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      name: "Dr. Robert White",
+      name: "Christy Schumm",
       specialty: "Neurologist",
     },
     {
       id: "2",
       image:
         "https://images.pexels.com/photos/3902884/pexels-photo-3902884.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      name: "Dr. Sarah Lee",
+      name: "Natalia Stanton Jr.",
       specialty: "Ophthalmologist",
     },
     {
       id: "3",
       image:
         "https://images.pexels.com/photos/8942125/pexels-photo-8942125.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      name: "Dr. Michael Johnson",
-      specialty: "Orthopedic Surgeon",
+      name: "Nola Murazik V",
+      specialty: "Cardiologist",
     },
     {
       id: "4",
       image:
         "https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      name: "Dr. Emily Adams",
+      name: "Elyssa O'Kon",
+      specialty: "Psychiatrist",
+    },
+        {
+      id: "4",
+      image:
+        "https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      name: "Dr. Geovany Keebler",
+      specialty: "Psychiatrist",
+    },
+        {
+      id: "4",
+      image:
+        "https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      name: "Ramy Malik",
       specialty: "Psychiatrist",
     },
   ];

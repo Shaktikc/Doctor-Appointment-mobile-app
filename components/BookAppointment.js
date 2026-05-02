@@ -4,23 +4,22 @@ import {
     Text,
     Image,
     ScrollView,
-    Alert,
     ActivityIndicator,
 } from "react-native";
 import Button from "./Button/Button";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { Calendar } from "react-native-calendars";
 import moment from "moment";
 import { colors } from "./styles/Theme";
-import { showTopMessage } from "./ErrorHandler";
 import TimeSlot from "./TimeSlot";
 import { getAvailableSlotsForDoctor } from "../data/DoctorAvailability";
 import { Ionicons } from "@expo/vector-icons";
 
-
+// Mock bookings (replace with real data if needed)
+const bookedApps = [];
 
 export default function BookAppointment({ route, navigation }) {
-    const doctor = route?.params?.doctor ;
+    const doctor = route?.params?.doctor;
     const serviceId = doctor.id;
     const scrollViewRef = useRef(null);
 
@@ -30,88 +29,80 @@ export default function BookAppointment({ route, navigation }) {
     const [timeList, setTimeList] = useState([]);
     const [serviceTimeList, setServiceTimeList] = useState([]);
 
-
     const today = moment().format("YYYY-MM-DD");
     const threeMonthsLater = moment().add(3, "months").format("YYYY-MM-DD");
 
-    console.log("nicee", serviceTimeList);
-
-    // Get available time slots for the selected doctor on a specific date
+    //  Get available time slots (returns data instead of relying on state)
     const getTimeListFromDatabase = async (doctorName, dateString) => {
-        setLoading(true);
-           setServiceTimeList([]);
         try {
-            // Simulate fetch delay
-            await new Promise((res) => setTimeout(res, 200));
-            
-            // Get available slots for this doctor on this date
-            const availableSlots = getAvailableSlotsForDoctor(doctorName, dateString);
+            // await new Promise((res) => setTimeout(res, 200));
 
-            // console.log(`Available slots for ${doctorName} on ${dateString}:`, availableSlots);
-            
-            // Convert to the expected format with id and apptime
+            const availableSlots = getAvailableSlotsForDoctor(
+                doctorName,
+                dateString
+            );
+
             const formattedTimes = availableSlots.map((time, index) => ({
                 id: index + 1,
                 apptime: time,
             }));
-            
-            setTimeList(formattedTimes);
+
+            return formattedTimes;
         } catch (error) {
             console.error(error);
-            setTimeList([]);
-        } finally {
-            setLoading(false);
+            return [];
         }
     };
 
-    // Compute booked slots from mock appointments and local state
-    const getServiceAppointments = async (day) => {
-        setLoading(true);
-        setServiceTimeList([]);
+    //  Compute booked slots using passed data
+    const getServiceAppointments = async (day, timeListData) => {
         try {
-            // gather mock + local booked apps
-            const allBookings = [ ...bookedApps];
+            const allBookings = [...bookedApps];
+
             const serviceBookings = allBookings.filter(
-                (app) => app.serviceId === serviceId && app.bookedDate === day
+                (app) =>
+                    app.serviceId === serviceId &&
+                    app.bookedDate === day
             );
 
-            // setBookedApps(serviceBookings);
-
-            const availableTimes = timeList.map((time) => {
+            const availableTimes = timeListData.map((time) => {
                 const bookedHour = serviceBookings.some(
                     (app) => app.bookedTime === time.apptime
                 );
 
                 return {
                     ...time,
-                    isBooked: !!bookedHour,
+                    isBooked: bookedHour,
                 };
             });
 
             setServiceTimeList(availableTimes);
         } catch (error) {
             console.error(error);
-        } finally {
-            setLoading(false);
-            return true;
         }
     };
 
-
-    // Mock user (no real auth)
+    // Mock user
     const user = { uid: "mock-user" };
 
-
-
+    //  Single controlled execution
     const onDateSelect = async (day) => {
         try {
-            setServiceTimeList([]);
             setLoading(true);
             setSelectedDate(day.dateString);
+            setSelectedTime(null);
 
-            await getTimeListFromDatabase(doctor.name, day.dateString);
-            // console.log("Time list after fetching:", timeList);
-            await getServiceAppointments(day.dateString);
+            const timeListData = await getTimeListFromDatabase(
+                doctor.name,
+                day.dateString
+            );
+
+            setTimeList(timeListData);
+
+            await getServiceAppointments(
+                day.dateString,
+                timeListData
+            );
         } catch (error) {
             console.error(error);
         } finally {
@@ -123,23 +114,17 @@ export default function BookAppointment({ route, navigation }) {
         setSelectedTime(time);
     };
 
-    const goToCompletedScreen = () => {
-        navigation.navigate("SearchScreen");
-    };
-
-    const goToLoginScreen = () => {
-        navigation.navigate("LoginScreen");
-    };
-
     return (
         <View style={styles.out_container}>
             <ScrollView
                 nestedScrollEnabled={true}
                 ref={scrollViewRef}
                 style={styles.container}
-                onContentSizeChange={(contentWidth, contentHeight) => {
+                onContentSizeChange={() => {
                     if (!loading && scrollViewRef.current) {
-                        scrollViewRef.current.scrollToEnd({ animated: true });
+                        scrollViewRef.current.scrollToEnd({
+                            animated: true,
+                        });
                     }
                 }}
             >
@@ -164,13 +149,18 @@ export default function BookAppointment({ route, navigation }) {
                                 size={18}
                                 color={colors.color_primary}
                             />
-                            <Text style={styles.location}>{doctor.location}</Text>
+                            <Text style={styles.location}>
+                                {doctor.location}
+                            </Text>
                         </View>
                     </View>
                 </View>
 
+                {/* Calendar */}
                 <View style={styles.text_container}>
-                    <Text style={styles.subTitle}>Select Date:</Text>
+                    <Text style={styles.subTitle}>
+                        Select Date:
+                    </Text>
                 </View>
 
                 <Calendar
@@ -181,18 +171,15 @@ export default function BookAppointment({ route, navigation }) {
                             selected: true,
                             disableTouchEvent: true,
                             selectedColor: colors.color_primary,
-                            selectedTextColor: colors.color_white,
-                        },
-                    }}
-                    customStyle={{
-                        today: {
-                            todayTextColor: colors.color_primary,
+                            selectedTextColor:
+                                colors.color_white,
                         },
                     }}
                     minDate={today}
                     maxDate={threeMonthsLater}
                 />
 
+                {/* Time Slots */}
                 {selectedDate && (
                     <View style={styles.bottom_container}>
                         {loading ? (
@@ -201,32 +188,43 @@ export default function BookAppointment({ route, navigation }) {
                             />
                         ) : (
                             <>
-                                <View style={styles.text_container}>
-                                    <Text style={styles.subTitle}>
+                                <View
+                                    style={styles.text_container}
+                                >
+                                    <Text
+                                        style={styles.subTitle}
+                                    >
                                         Select Time:
                                     </Text>
                                 </View>
-                                <View style={styles.time_container}>
-                                    {serviceTimeList.map((time) => (
-                                        <TimeSlot
-                                            key={time.id.toString()}
-                                            time={time}
-                                            onPress={onTimeSelect}
-                                            isSelected={
-                                                selectedTime === time.apptime
-                                            }
-                                            isBooked={time.isBooked}
-                                        />
-                                    ))}
+
+                                <View
+                                    style={styles.time_container}
+                                >
+                                    {serviceTimeList.map(
+                                        (time) => (
+                                            <TimeSlot
+                                                key={time.id.toString()}
+                                                time={time}
+                                                onPress={
+                                                    onTimeSelect
+                                                }
+                                                isSelected={
+                                                    selectedTime ===
+                                                    time.apptime
+                                                }
+                                                isBooked={
+                                                    time.isBooked
+                                                }
+                                            />
+                                        )
+                                    )}
                                 </View>
                             </>
                         )}
                     </View>
                 )}
             </ScrollView>
-            {/* <View style={styles.button_container}>
-                <Button text={"Book"} onPress={handleBooking} />
-            </View> */}
         </View>
     );
 }
@@ -245,14 +243,11 @@ const styles = StyleSheet.create({
         padding: 16,
         borderRadius: 20,
     },
-
     calendar_container: {
         padding: 16,
         borderRadius: 20,
         marginBottom: 12,
-        justifyContent: "center",
     },
-
     image_container: {
         marginRight: 16,
         borderRadius: 50,
@@ -263,13 +258,11 @@ const styles = StyleSheet.create({
     title_container: {
         flex: 1,
     },
-    location_container: { flexDirection: "row", paddingVertical: 8 },
-    about_container: {
-        flex: 1,
-        justifyContent: "space-evenly",
+    location_container: {
+        flexDirection: "row",
+        paddingVertical: 8,
     },
     text_container: {
-        flex: 1,
         flexDirection: "row",
     },
     time_container: {
@@ -281,19 +274,12 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
     },
     bottom_container: {
-        flex: 1,
         marginBottom: 24,
-    },
-    button_container: {
-        flexDirection: "row",
-        marginBottom: 126,
-        paddingHorizontal: 24,
     },
     about: {
         fontSize: 20,
         fontFamily: "Mulish-Light",
     },
-
     title: {
         fontSize: 24,
         fontFamily: "Mulish-Medium",
@@ -302,15 +288,10 @@ const styles = StyleSheet.create({
         fontSize: 18,
         paddingVertical: 16,
     },
-    desc: {
-        fontSize: 14,
-        fontFamily: "Mulish-Light",
-    },
     location: {
         fontSize: 16,
         fontFamily: "Mulish-Light",
         flex: 1,
         color: colors.color_primary,
-        justifyContent: "center",
     },
 });

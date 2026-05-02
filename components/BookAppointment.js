@@ -126,15 +126,15 @@ export default function BookAppointment({ route, navigation }) {
     const handleBooking = () => {
         if (selectedDate && selectedTime && user) {
             Alert.alert(
-                "Randevu Oluşturma",
-                "Randevunuz oluşturulacak, onaylıyor musunuz ?",
+                "Confirm Booking",
+                "Your appointment will be created, are you sure?",
                 [
                     {
-                        text: "Vazgeç",
+                        text: "Cancel",
                         style: "cancel",
                     },
                     {
-                        text: "Tamamla",
+                        text: "Book",
                         onPress: () => {
                             pushAppointment();
                         },
@@ -143,10 +143,10 @@ export default function BookAppointment({ route, navigation }) {
             );
         } else {
             if (!user) {
-                showTopMessage("Kullanıcı girişi yapmadınız", "success");
+                showTopMessage("You are not logged in", "success");
                 goToLoginScreen();
             } else if (!selectedDate || !selectedTime) {
-                showTopMessage("Lütfen bir gün ve bir saat seçin.", "info");
+                showTopMessage("Please select a date and time.", "info");
             }
         }
     };
@@ -164,7 +164,7 @@ export default function BookAppointment({ route, navigation }) {
         // update local booked apps
         setBookedApps((prev) => [...prev, newApp]);
 
-        showTopMessage("Randevunuz oluşturuldu!", "success");
+        showTopMessage("Your appointment has been created!", "success");
 
 
         goToCompletedScreen();
@@ -222,7 +222,7 @@ export default function BookAppointment({ route, navigation }) {
                                 {doctor.name}
                             </Text>
                             <Text style={styles.about}>
-                                {doctor.categories[0]} Uzmanı
+                                {doctor.categories[0]} Specialist
                             </Text>
                         </View>
                         <View style={styles.location_container}>
@@ -237,7 +237,7 @@ export default function BookAppointment({ route, navigation }) {
                 </View>
 
                 <View style={styles.text_container}>
-                    <Text style={styles.subTitle}>Gün Seçin:</Text>
+                    <Text style={styles.subTitle}>Select Date:</Text>
                 </View>
 
                 <Calendar
@@ -270,7 +270,7 @@ export default function BookAppointment({ route, navigation }) {
                             <>
                                 <View style={styles.text_container}>
                                     <Text style={styles.subTitle}>
-                                        Saat Seçin:
+                                        Select Time:
                                     </Text>
                                 </View>
                                 <View style={styles.time_container}>
@@ -292,7 +292,7 @@ export default function BookAppointment({ route, navigation }) {
                 )}
             </ScrollView>
             <View style={styles.button_container}>
-                <Button text={"Tamamla"} onPress={handleBooking} />
+                <Button text={"Book"} onPress={handleBooking} />
             </View>
         </View>
     );

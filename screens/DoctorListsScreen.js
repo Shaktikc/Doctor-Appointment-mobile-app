@@ -7,7 +7,7 @@ import {
   View,
 } from "react-native";
 import React, { useState } from "react";
-import DoctorCard from "../components/DoctorCard";
+import ViewDoctorProfile from "../components/ViewDoctorProfile";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
 
@@ -145,7 +145,7 @@ const DoctorListsScreen = () => {
           showsVerticalScrollIndicator={false}
         >
           {doctorsData.map((doctor) => (
-            <DoctorCard key={doctor.id} doctor={doctor} />
+            <ViewDoctorProfile key={doctor.id} doctor={doctor} />
           ))}
         </ScrollView>
       </View>

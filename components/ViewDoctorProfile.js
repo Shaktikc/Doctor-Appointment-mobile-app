@@ -3,7 +3,7 @@ import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons"; // Import your desired icon from the library
 
-const DoctorCard = ({ doctor }) => {
+const ViewDoctorProfile = ({ doctor }) => {
   const navigation = useNavigation(); // Initialize navigation
 
   const handleViewProfile = () => {
@@ -107,4 +107,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DoctorCard;
+export default ViewDoctorProfile;

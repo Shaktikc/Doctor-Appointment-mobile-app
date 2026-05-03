@@ -155,7 +155,7 @@ export default function BookAppointment({ route, navigation }) {
                                 {
                                     text: "OK",
                                     onPress: () => {
-                                        navigation.navigate("Profile");
+                                        navigation.navigate("My Appointments");
                                     },
                                 },
                             ]

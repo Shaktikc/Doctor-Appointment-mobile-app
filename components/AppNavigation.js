@@ -6,10 +6,9 @@ import { Octicons } from "@expo/vector-icons";
 
 import HomeScreen from "../screens/HomeScreen";
 import DoctorListsScreen from "../screens/DoctorListsScreen";
-import AppointmentBookingScreen from "../screens/AppointmentBookingScreen";
-import ViewAppointmentsScreen from "../screens/ViewAppointmentsScreen";
 import MyAppointment from "../screens/MyAppointment";
 import DoctorDetailsScreen from "../screens/DoctorDetailsScreen";
+import BookAppointment from "./BookAppointment/BookAppointment";
 
 
 
@@ -57,6 +56,7 @@ const AppNavigation = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="MainTabs" component={TabNavigator} />
       <Stack.Screen name="DoctorDetails" component={DoctorDetailsScreen} />
+      <Stack.Screen name="BookAppointment" component={BookAppointment} />
     </Stack.Navigator>
   );
 };

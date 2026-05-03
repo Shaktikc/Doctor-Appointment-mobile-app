@@ -57,7 +57,7 @@
     },
     {
       id: "5",
-      name: "Dr. Geovany Keebler",
+      name: "Geovany Keebler",
       categories: ["Gynecologist", "Obstetrician"],
       location: "Miami",
       experience: "9 years",
@@ -133,7 +133,7 @@
         ],
     },
     {
-        name: "Dr. Geovany Keebler",
+        name: "Geovany Keebler",
         timezone: "Australia/Perth",
         schedule: [
             { day_of_week: "Thursday", available_at: "07:00", available_until: "14:00" },

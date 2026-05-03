@@ -19,7 +19,7 @@ const DoctorDetailsScreen = ({ route }) => {
 
   const handleBookAppointment = () => {
     // Navigate to the Appointment Booking screen with the selected doctor's data
-    navigation.navigate("Book Appointment", { doctor });
+    navigation.navigate("BookAppointment", { doctor });
   };
 
   return (

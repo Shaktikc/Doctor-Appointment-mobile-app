@@ -3,11 +3,7 @@ import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 
-/**
- * ViewDoctorProfile Component
- * Displays a doctor profile card with navigation
- */
-const ViewDoctorProfile = ({ doctor }) => {
+const ViewDoctorButton = ({ doctor }) => {
   const navigation = useNavigation();
 
   const handleViewProfile = () => {
@@ -110,4 +106,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ViewDoctorProfile;
+export default ViewDoctorButton;

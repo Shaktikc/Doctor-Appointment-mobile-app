@@ -1,4 +1,4 @@
 /**
  * ViewDoctorProfile Component Exports
  */
-export { default } from "./ViewDoctorProfile";
+export { default } from "./ViewDoctorButton";

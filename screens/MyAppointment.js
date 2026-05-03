@@ -18,7 +18,7 @@ import CustomButton from "../components/CustomButton";
 import { useAuth } from "../AuthContext";
 import { colors } from "../components/styles/Theme";
 
-const ProfileScreen = ({ navigation }) => {
+const MyAppointment = ({ navigation }) => {
   const [image, setImage] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const { bookedAppointment, bookedAppointments, cancelAppointment } = useAuth();
@@ -297,4 +297,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProfileScreen; // Wrap the component with withNavigation
+export default MyAppointment; // Wrap the component with withNavigation

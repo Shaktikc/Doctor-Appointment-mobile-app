@@ -3,12 +3,10 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Octicons } from "@expo/vector-icons";
 import HomeScreen from "../screens/HomeScreen";
-import ProfileScreen from "../screens/ProfileScreen";
 import DoctorListsScreen from "../screens/DoctorListsScreen";
-import DoctorDetailsScreen from "../screens/DoctorDetailsScreen";
 import AppointmentBookingScreen from "../screens/AppointmentBookingScreen";
 import ViewAppointmentsScreen from "../screens/ViewAppointmentsScreen";
-import BookAppointment from "./BookAppointment/BookAppointment";
+import MyAppointment from "../screens/MyAppointment";
 
 
 
@@ -29,16 +27,6 @@ const AppNavigation = () => {
       />
 
       <Tab.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="person-circle-outline" size={size} color={color} />
-          ),
-          headerShown: false,
-        }}
-      />
-      <Tab.Screen
         name="Doctor Lists"
         component={DoctorListsScreen}
         options={{
@@ -48,33 +36,11 @@ const AppNavigation = () => {
           headerShown: false,
         }}
       />
-      <Tab.Screen
-        name="DoctorDetails"
-        component={DoctorDetailsScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons
-              name="information-circle-outline"
-              size={size}
-              color={color}
-            />
-          ),
-          headerShown: false,
-        }}
-      />
+
 
       <Tab.Screen
-        name="Book Appointment"
-        component={BookAppointment}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="calendar" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
         name="My Appointments"
-        component={ViewAppointmentsScreen}
+        component={MyAppointment}
         options={{
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="list" size={size} color={color} />

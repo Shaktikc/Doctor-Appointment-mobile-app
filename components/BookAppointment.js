@@ -198,28 +198,40 @@ export default function BookAppointment({ route, navigation }) {
                                     </Text>
                                 </View>
 
-                                <View
-                                    style={styles.time_container}
-                                >
-                                    {serviceTimeList.map(
-                                        (time) => (
-                                            <TimeSlot
-                                                key={time.id.toString()}
-                                                time={time}
-                                                onPress={
-                                                    onTimeSelect
-                                                }
-                                                isSelected={
-                                                    selectedTime ===
-                                                    time.apptime
-                                                }
-                                                isBooked={
-                                                    time.isBooked
-                                                }
-                                            />
-                                        )
-                                    )}
-                                </View>
+                                {serviceTimeList.length === 0 ? (
+                                    <View
+                                        style={styles.no_slots_container}
+                                    >
+                                        <Text
+                                            style={styles.no_slots_message}
+                                        >
+                                            Doctor is not available on this day, please select a different day
+                                        </Text>
+                                    </View>
+                                ) : (
+                                    <View
+                                        style={styles.time_container}
+                                    >
+                                        {serviceTimeList.map(
+                                            (time) => (
+                                                <TimeSlot
+                                                    key={time.id.toString()}
+                                                    time={time}
+                                                    onPress={
+                                                        onTimeSelect
+                                                    }
+                                                    isSelected={
+                                                        selectedTime ===
+                                                        time.apptime
+                                                    }
+                                                    isBooked={
+                                                        time.isBooked
+                                                    }
+                                                />
+                                            )
+                                        )}
+                                    </View>
+                                )}
                             </>
                         )}
                     </View>
@@ -278,11 +290,11 @@ const styles = StyleSheet.create({
     },
     about: {
         fontSize: 20,
-        fontFamily: "Mulish-Light",
+    
     },
     title: {
         fontSize: 24,
-        fontFamily: "Mulish-Medium",
+  
     },
     subTitle: {
         fontSize: 18,
@@ -290,8 +302,21 @@ const styles = StyleSheet.create({
     },
     location: {
         fontSize: 16,
-        fontFamily: "Mulish-Light",
+   
         flex: 1,
         color: colors.color_primary,
+    },
+    no_slots_container: {
+        padding: 16,
+        backgroundColor: colors.color_white,
+        borderRadius: 20,
+        justifyContent: "center",
+        alignItems: "center",
+        minHeight: 100,
+    },
+    no_slots_message: {
+        fontSize: 16,
+        color: colors.color_primary,
+        textAlign: "center",
     },
 });

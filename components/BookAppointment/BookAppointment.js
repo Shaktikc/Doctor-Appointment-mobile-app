@@ -6,17 +6,16 @@ import {
     ScrollView,
     ActivityIndicator,
 } from "react-native";
-import Button from "./Button/Button";
+import Button from "../Button/Button";
 import React, { useState, useRef } from "react";
 import { Calendar } from "react-native-calendars";
 import moment from "moment";
-import { colors } from "./styles/Theme";
-import TimeSlot from "./TimeSlot";
-import { getAvailableSlotsForDoctor } from "../data/DoctorAvailability";
+import { colors } from "../styles/Theme";
+import TimeSlot from "../TimeSlot";
+import { getAvailableSlotsForDoctor } from "../../data/DoctorAvailability";
 import { Ionicons } from "@expo/vector-icons";
-
-// Mock bookings (replace with real data if needed)
-const bookedApps = [];
+import { getTimeListFromDatabase } from "./utils/getTimeListFromDatabase";
+import { getServiceAppointments } from "./utils/getServiceAppointments";
 
 export default function BookAppointment({ route, navigation }) {
     const doctor = route?.params?.doctor;
@@ -32,57 +31,8 @@ export default function BookAppointment({ route, navigation }) {
     const today = moment().format("YYYY-MM-DD");
     const threeMonthsLater = moment().add(3, "months").format("YYYY-MM-DD");
 
-    //  Get available time slots (returns data instead of relying on state)
-    const getTimeListFromDatabase = async (doctorName, dateString) => {
-        try {
-            // await new Promise((res) => setTimeout(res, 200));
 
-            const availableSlots = getAvailableSlotsForDoctor(
-                doctorName,
-                dateString
-            );
-
-            const formattedTimes = availableSlots.map((time, index) => ({
-                id: index + 1,
-                apptime: time,
-            }));
-
-            return formattedTimes;
-        } catch (error) {
-            console.error(error);
-            return [];
-        }
-    };
-
-    //  Compute booked slots using passed data
-    const getServiceAppointments = async (day, timeListData) => {
-        try {
-            const allBookings = [...bookedApps];
-
-            const serviceBookings = allBookings.filter(
-                (app) =>
-                    app.serviceId === serviceId &&
-                    app.bookedDate === day
-            );
-
-            const availableTimes = timeListData.map((time) => {
-                const bookedHour = serviceBookings.some(
-                    (app) => app.bookedTime === time.apptime
-                );
-
-                return {
-                    ...time,
-                    isBooked: bookedHour,
-                };
-            });
-
-            setServiceTimeList(availableTimes);
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    // Mock user
+// Mock user
     const user = { uid: "mock-user" };
 
     //  Single controlled execution
@@ -101,7 +51,9 @@ export default function BookAppointment({ route, navigation }) {
 
             await getServiceAppointments(
                 day.dateString,
-                timeListData
+                timeListData,
+                serviceId,
+                setServiceTimeList
             );
         } catch (error) {
             console.error(error);

@@ -8,7 +8,8 @@ import DoctorListsScreen from "../screens/DoctorListsScreen";
 import DoctorDetailsScreen from "../screens/DoctorDetailsScreen";
 import AppointmentBookingScreen from "../screens/AppointmentBookingScreen";
 import ViewAppointmentsScreen from "../screens/ViewAppointmentsScreen";
-import BookAppointment from "./BookAppointment";
+import BookAppointment from "./BookAppointment/BookAppointment";
+
 
 
 const Tab = createBottomTabNavigator();

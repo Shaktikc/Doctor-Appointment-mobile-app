@@ -23,7 +23,7 @@ export default function BookAppointment({ route, navigation }) {
     const doctor = route?.params?.doctor;
     const serviceId = doctor.id;
     const scrollViewRef = useRef(null);
-    const { saveAppointment } = useAuth();
+    const { saveAppointment, bookedAppointments, isSlotBooked } = useAuth();
 
     const [loading, setLoading] = useState(false);
     const [selectedDate, setSelectedDate] = useState(null);
@@ -55,8 +55,9 @@ export default function BookAppointment({ route, navigation }) {
             await getServiceAppointments(
                 day.dateString,
                 timeListData,
-                serviceId,
-                setServiceTimeList
+                doctor.name,
+                setServiceTimeList,
+                bookedAppointments
             );
         } catch (error) {
             console.error(error);
@@ -67,23 +68,39 @@ export default function BookAppointment({ route, navigation }) {
 
     const onTimeSelect = (time) => {
         setSelectedTime(time);
-        
-        // Save appointment to context
-        const appointmentData = {
-            doctorName: doctor.name,
-            doctorPhoto: doctor.photo,
-            specialization: doctor.categories[0],
-            location: doctor.location,
-            appointmentDate: selectedDate,
-            appointmentTime: time,
-            bookedDate: moment().format("YYYY-MM-DD HH:mm:ss"),
-        };
-        saveAppointment(appointmentData);
+        // // Save appointment to context
+        // const appointmentData = {
+        //     doctorName: doctor.name,
+        //     doctorPhoto: doctor.photo,
+        //     specialization: doctor.categories[0],
+        //     location: doctor.location,
+        //     appointmentDate: selectedDate,
+        //     appointmentTime: time,
+        //     bookedDate: moment().format("YYYY-MM-DD HH:mm:ss"),
+        // };
+        // saveAppointment(appointmentData);
     };
 
     const onBook = () => {
         if (!selectedTime) {
             Alert.alert("Error", "Please select a time slot before booking");
+            return;
+        }
+
+        // Check for double-booking
+        if (isSlotBooked(doctor.name, selectedDate, selectedTime)) {
+            Alert.alert(
+                "Slot Unavailable",
+                "Sorry, this time slot has just been booked by another user. Please select a different time.",
+                [
+                    {
+                        text: "OK",
+                        onPress: () => {
+                            setSelectedTime(null);
+                        },
+                    },
+                ]
+            );
             return;
         }
 
@@ -101,6 +118,36 @@ export default function BookAppointment({ route, navigation }) {
                 {
                     text: "Book",
                     onPress: () => {
+                        // Final double-check before booking
+                        if (isSlotBooked(doctor.name, selectedDate, selectedTime)) {
+                            Alert.alert(
+                                "Booking Failed",
+                                "This slot was just booked. Please try another time."
+                            );
+                            return;
+                        }
+
+                        // Save appointment to context
+                        const appointmentData = {
+                            doctorName: doctor.name,
+                            doctorPhoto: doctor.photo,
+                            specialization: doctor.categories[0],
+                            location: doctor.location,
+                            appointmentDate: selectedDate,
+                            appointmentTime: selectedTime,
+                            bookedDate: moment().format("YYYY-MM-DD HH:mm:ss"),
+                        };
+                        
+                        const bookingSuccess = saveAppointment(appointmentData);
+
+                        if (bookingSuccess === false) {
+                            Alert.alert(
+                                "Booking Failed",
+                                "Could not complete booking. This slot may have been taken."
+                            );
+                            return;
+                        }
+
                         Alert.alert(
                             "Success",
                             "Your appointment has been booked successfully!",

@@ -1,3 +1,35 @@
+/**
+ * Doctor Availability & Booking System
+ * 
+ * BOOKING RULES:
+ * 1. Each doctor's schedule defines available time windows (days + start/end times)
+ * 2. Available windows are converted into 30-minute slots automatically
+ * 3. Booked slots are persisted in AuthContext and unavailable in the UI
+ * 4. Double-booking prevention: Same doctor/date/time combo can only be booked once
+ * 5. When a slot is booked, it's immediately marked as unavailable for other users
+ * 
+ * TIME ZONE DOCUMENTATION:
+ * - Each doctor has a designated timezone (e.g., "Australia/Sydney")
+ * - Doctor's working hours are defined in their LOCAL timezone
+ * - When fetching available slots for a date, the system:
+ *   a) Converts the requested date to the doctor's timezone
+ *   b) Determines the day of week in that timezone
+ *   c) Retrieves schedules matching that day
+ *   d) Generates 30-minute slots within those hours
+ * - Appointment bookings are stored with the doctor's timezone reference
+ * - No conversion is applied - all times are in the doctor's local timezone
+ * 
+ * SLOT GENERATION:
+ * - 30-minute intervals: slots start at :00 and :30 minutes
+ * - Example: 09:00-11:00 generates [09:00, 09:30, 10:00, 10:30]
+ * - End time is NOT included as a slot (used as boundary only)
+ * 
+ * PERSISTENCE:
+ * - Booked appointments are stored in React Context (bookedAppointments array)
+ * - Each appointment has unique identifier: doctorName | appointmentDate | appointmentTime
+ * - Future enhancement: Add AsyncStorage for persistent storage across app restarts
+ */
+
 // Doctor availability data by name, timezone, day of week, and time slots
 const DOCTOR_AVAILABILITY = [
     {

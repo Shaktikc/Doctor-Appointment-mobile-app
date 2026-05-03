@@ -8,6 +8,7 @@ import {
   Modal,
   Button,
   ScrollView,
+  Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
@@ -20,7 +21,7 @@ import { colors } from "../components/styles/Theme";
 const ProfileScreen = ({ navigation }) => {
   const [image, setImage] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
-  const { bookedAppointment } = useAuth();
+  const { bookedAppointment, bookedAppointments, cancelAppointment } = useAuth();
 
   const [cameraPermission, requestPermission] = Camera.useCameraPermissions();
 
@@ -84,33 +85,69 @@ const ProfileScreen = ({ navigation }) => {
           <Text style={styles.infoText}>Date of Birth: 01-Jan-1990</Text>
         </View>
 
-        {/* Booked Appointment Section */}
-        {bookedAppointment && (
+        {/* Booked Appointments Section */}
+        {bookedAppointments && bookedAppointments.length > 0 && (
           <View style={styles.appointmentContainer}>
-            <Text style={styles.appointmentTitle}>Your Appointment</Text>
-            <View style={styles.appointmentCard}>
-              <Image
-                source={{ uri: bookedAppointment.doctorPhoto }}
-                style={styles.doctorImage}
-              />
-              <View style={styles.appointmentDetails}>
-                <Text style={styles.doctorName}>
-                  {bookedAppointment.doctorName}
-                </Text>
-                <Text style={styles.specialization}>
-                  {bookedAppointment.specialization} Specialist
-                </Text>
-                <Text style={styles.appointmentInfo}>
-                  📅 {bookedAppointment.appointmentDate}
-                </Text>
-                <Text style={styles.appointmentInfo}>
-                  ⏰ {bookedAppointment.appointmentTime}
-                </Text>
-                <Text style={styles.appointmentInfo}>
-                  📍 {bookedAppointment.location}
-                </Text>
+            <Text style={styles.appointmentTitle}>
+              Your Appointments ({bookedAppointments.length})
+            </Text>
+            {bookedAppointments.map((appointment, index) => (
+              <View key={appointment.id || index} style={styles.appointmentCard}>
+                <Image
+                  source={{ uri: appointment.doctorPhoto }}
+                  style={styles.doctorImage}
+                />
+                <View style={styles.appointmentDetails}>
+                  <Text style={styles.doctorName}>
+                    {appointment.doctorName}
+                  </Text>
+                  <Text style={styles.specialization}>
+                    {appointment.specialization} Specialist
+                  </Text>
+                  <Text style={styles.appointmentInfo}>
+                    📅 {appointment.appointmentDate}
+                  </Text>
+                  <Text style={styles.appointmentInfo}>
+                    ⏰ {appointment.appointmentTime}
+                  </Text>
+                  <Text style={styles.appointmentInfo}>
+                    📍 {appointment.location}
+                  </Text>
+                </View>
+                <TouchableOpacity
+                  style={styles.cancelButton}
+                  onPress={() => {
+                    Alert.alert(
+                      "Cancel Appointment",
+                      "Are you sure you want to cancel this appointment?",
+                      [
+                        { text: "No", style: "cancel" },
+                        {
+                          text: "Yes",
+                          onPress: () => {
+                            cancelAppointment(appointment.id);
+                            Alert.alert(
+                              "Cancelled",
+                              "Your appointment has been cancelled."
+                            );
+                          },
+                          style: "destructive",
+                        },
+                      ]
+                    );
+                  }}
+                >
+                  <Ionicons name="close" size={24} color="red" />
+                </TouchableOpacity>
               </View>
-            </View>
+            ))}
+          </View>
+        )}
+        {(!bookedAppointments || bookedAppointments.length === 0) && (
+          <View style={styles.noAppointmentContainer}>
+            <Text style={styles.noAppointmentText}>
+              No appointments booked yet
+            </Text>
           </View>
         )}
       </ScrollView>
@@ -240,6 +277,23 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#555",
     marginBottom: 4,
+  },
+  cancelButton: {
+    padding: 8,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  noAppointmentContainer: {
+    marginTop: 30,
+    paddingVertical: 40,
+    alignItems: "center",
+    borderTopWidth: 1,
+    borderTopColor: "#e0e0e0",
+  },
+  noAppointmentText: {
+    fontSize: 16,
+    color: "#999",
+    fontStyle: "italic",
   },
 });
 

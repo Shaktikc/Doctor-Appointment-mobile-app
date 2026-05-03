@@ -5,6 +5,7 @@ import {
     Image,
     ScrollView,
     ActivityIndicator,
+    Alert,
 } from "react-native";
 import Button from "../Button/Button";
 import React, { useState, useRef } from "react";
@@ -78,6 +79,45 @@ export default function BookAppointment({ route, navigation }) {
             bookedDate: moment().format("YYYY-MM-DD HH:mm:ss"),
         };
         saveAppointment(appointmentData);
+    };
+
+    const onBook = () => {
+        if (!selectedTime) {
+            Alert.alert("Error", "Please select a time slot before booking");
+            return;
+        }
+
+        Alert.alert(
+            "Confirm Booking",
+            `Are you sure you want to book this appointment?\n\nDoctor: ${doctor.name}\nDate: ${selectedDate}\nTime: ${selectedTime}`,
+            [
+                {
+                    text: "Cancel",
+                    onPress: () => {
+                        // Do nothing on cancel
+                    },
+                    style: "cancel",
+                },
+                {
+                    text: "Book",
+                    onPress: () => {
+                        Alert.alert(
+                            "Success",
+                            "Your appointment has been booked successfully!",
+                            [
+                                {
+                                    text: "OK",
+                                    onPress: () => {
+                                        navigation.navigate("Profile");
+                                    },
+                                },
+                            ]
+                        );
+                    },
+                    style: "default",
+                },
+            ]
+        );
     };
 
     return (
@@ -203,7 +243,9 @@ export default function BookAppointment({ route, navigation }) {
                     </View>
                 )}
             </ScrollView>
-
+              <View style={styles.button_container}>
+                <Button text={"Book"} onPress={onBook} />
+            </View>
         </View>
     );
 }
@@ -213,6 +255,11 @@ const styles = StyleSheet.create({
     container: {
         flexGrow: 1,
         marginTop: 48,
+        paddingHorizontal: 24,
+    },
+        button_container: {
+        flexDirection: "row",
+        marginBottom: 126,
         paddingHorizontal: 24,
     },
     header_container: {

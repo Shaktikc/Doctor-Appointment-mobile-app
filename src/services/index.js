@@ -8,7 +8,6 @@ export {
 
 export {
   validateAppointment,
-  isSlotAvailable,
   prepareAppointmentForBooking,
   cancelAppointmentFromList,
   getAppointmentsForDoctor,

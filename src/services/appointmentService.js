@@ -31,9 +31,7 @@ export const validateAppointment = (appointmentData) => {
  * @param {array} bookedAppointments - List of booked appointments
  * @returns {boolean} True if slot is available
  */
-export const isSlotAvailable = (doctorName, appointmentDate, appointmentTime, bookedAppointments) => {
-  return !isSlotBooked(bookedAppointments, doctorName, appointmentDate, appointmentTime);
-};
+
 
 /**
  * Prepare appointment data for booking
@@ -82,7 +80,7 @@ export const getUpcomingAppointments = (appointments) => {
 
 export default {
   validateAppointment,
-  isSlotAvailable,
+
   prepareAppointmentForBooking,
   cancelAppointmentFromList,
   getAppointmentsForDoctor,

@@ -16,7 +16,7 @@ import { FontAwesome5 } from "react-native-vector-icons";
 import { FontAwesome } from "react-native-vector-icons";
 import Featured from "../components/Featured";
 import Recommendations from "../components/Recommendations";
-import DoctorsList from "../components/DoctorsList";
+import TopDoctor from "../components/TopDoctor";
 import ServicesList from "../components/ServicesList";
 import TestimonialList from "../components/TestimonialList";
 
@@ -61,7 +61,7 @@ const HomeScreen = () => {
         {/* Card Slider */}
         <View style={styles.cardContainer}>
           {/* Our Doctors Section */}
-          <DoctorsList />
+          <TopDoctor />
         </View>
 
         {/* Testimonial Section */}

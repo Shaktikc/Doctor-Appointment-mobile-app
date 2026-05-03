@@ -12,7 +12,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { doctorsData } from "../data/data";
 import { useNavigation } from "@react-navigation/native";
 
-const DoctorsList = () => {
+const TopDoctor = () => {
 
    const navigation = useNavigation(); // Initialize navigation
   const handleViewProfile = (doctor) => {
@@ -55,7 +55,7 @@ const DoctorsList = () => {
   );
 };
 
-export default DoctorsList;
+export default TopDoctor;
 
 const styles = StyleSheet.create({
   doctorsContainer: {

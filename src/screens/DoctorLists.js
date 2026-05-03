@@ -16,7 +16,7 @@ import { getAllDoctors } from "../services/doctorService";
  * DoctorListsScreen Component
  * Displays list of doctors with search and filter functionality
  */
-const DoctorListsScreen = () => {
+const DoctorLists = () => {
   const [searchText, setSearchText] = useState("");
   const doctorsData = getAllDoctors();
 
@@ -76,7 +76,7 @@ const DoctorListsScreen = () => {
   );
 };
 
-export default DoctorListsScreen;
+export default DoctorLists;
 
 const styles = StyleSheet.create({
   container: {

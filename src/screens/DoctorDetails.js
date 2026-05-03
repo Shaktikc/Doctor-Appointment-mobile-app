@@ -16,7 +16,7 @@ import CustomButton from "../components/CustomButton";
  * DoctorDetailsScreen Component
  * Displays detailed information about a selected doctor
  */
-const DoctorDetailsScreen = ({ route }) => {
+const DoctorDetails = ({ route }) => {
   const { doctor } = route.params ?? {};
   const navigation = useNavigation();
 
@@ -312,4 +312,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DoctorDetailsScreen;
+export default DoctorDetails;

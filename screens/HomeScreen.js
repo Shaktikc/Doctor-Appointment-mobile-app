@@ -30,7 +30,7 @@ const HomeScreen = () => {
         >
           <View style={styles.topContainer}>
             <BlurView intensity={20} style={styles.blurContainer}>
-              <Text style={styles.greetingName}>Hello, Rajkumar</Text>
+              <Text style={styles.greetingName}>Hello, Shakti</Text>
               <Image
                 source={require("../assets/avatar.jpg")}
                 style={styles.avatar}

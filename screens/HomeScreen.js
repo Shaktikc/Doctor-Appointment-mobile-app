@@ -51,14 +51,6 @@ const HomeScreen = () => {
                   </Text>
                 </TouchableOpacity>
               </View>
-              {/* <Text style={styles.greetingSearch}>Find your doctor</Text> */}
-              <View style={styles.searchContainer}>
-                <EvilIcons name="search" size={24} color="#00b894" />
-                <TextInput
-                  style={styles.input}
-                  placeholder="Find your doctor"
-                />
-              </View>
               <TouchableOpacity style={styles.bookButton}>
                 <Text style={styles.bookButtonText}>Book an Appointment</Text>
               </TouchableOpacity>
@@ -68,25 +60,10 @@ const HomeScreen = () => {
 
         {/* Card Slider */}
         <View style={styles.cardContainer}>
-          <Text
-            style={{
-              fontSize: 20,
-              fontWeight: "bold",
-              marginTop: 10,
-            }}
-          >
-            Featured
-          </Text>
-          {/* Featured Section */}
-          <Featured />
-          {/* Recommendation Section */}
-          <Recommendations />
-
           {/* Our Doctors Section */}
           <DoctorsList />
         </View>
-        {/* Services Section */}
-        <ServicesList />
+
         {/* Testimonial Section */}
         <TestimonialList />
       </ScrollView>
@@ -96,7 +73,7 @@ const HomeScreen = () => {
 
 const styles = StyleSheet.create({
   topImgBG: {
-    height: 265,
+    height: 200,
     width: "100%",
     overflow: "hidden",
     borderBottomLeftRadius: 40,

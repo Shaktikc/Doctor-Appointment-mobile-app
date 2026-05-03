@@ -7,62 +7,34 @@ import {
   View,
 } from "react-native";
 import React from "react";
-import { FontAwesome } from "react-native-vector-icons";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+
+import { doctorsData } from "../data/data";
+import { useNavigation } from "@react-navigation/native";
 
 const DoctorsList = () => {
-  // Dummy data for our doctors
-  const ourDoctors = [
-    {
-      id: "1",
-      image:
-        "https://images.pexels.com/photos/8460157/pexels-photo-8460157.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      name: "Christy Schumm",
-      specialty: "Neurologist",
-    },
-    {
-      id: "2",
-      image:
-        "https://images.pexels.com/photos/3902884/pexels-photo-3902884.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      name: "Natalia Stanton Jr.",
-      specialty: "Ophthalmologist",
-    },
-    {
-      id: "3",
-      image:
-        "https://images.pexels.com/photos/8942125/pexels-photo-8942125.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      name: "Nola Murazik V",
-      specialty: "Cardiologist",
-    },
-    {
-      id: "4",
-      image:
-        "https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      name: "Elyssa O'Kon",
-      specialty: "Psychiatrist",
-    },
-        {
-      id: "4",
-      image:
-        "https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      name: "Dr. Geovany Keebler",
-      specialty: "Psychiatrist",
-    },
-        {
-      id: "4",
-      image:
-        "https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      name: "Ramy Malik",
-      specialty: "Psychiatrist",
-    },
-  ];
 
-  // Function to render an individual doctor card
+   const navigation = useNavigation(); // Initialize navigation
+  const handleViewProfile = (doctor) => {
+    navigation.navigate("DoctorDetails", { doctor });
+  };
+
   const renderDoctorCard = ({ item }) => (
     <View style={styles.doctorCard}>
-      <Image source={{ uri: item.image }} style={styles.doctorImage} />
+      <Image source={{ uri: item.photo }} style={styles.doctorImage} />
+
       <Text style={styles.doctorName}>{item.name}</Text>
-      <Text style={styles.doctorSpecialty}>{item.specialty}</Text>
-      <TouchableOpacity style={styles.learnMoreButton}>
+
+      <Text style={styles.doctorSpecialty}>
+        {item.categories && item.categories.length > 0
+          ? item.categories[0]
+          : ""}
+      </Text>
+
+      <TouchableOpacity
+        style={styles.learnMoreButton}
+        onPress={() => handleViewProfile(item)}
+      >
         <Text style={styles.learnMoreButtonText}>More Info</Text>
       </TouchableOpacity>
     </View>
@@ -71,13 +43,12 @@ const DoctorsList = () => {
   return (
     <View style={styles.doctorsContainer}>
       <Text style={styles.doctorsTitle}>Our Top Doctors</Text>
+
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         <View style={{ flexDirection: "row" }}>
-          {ourDoctors.map((item) => renderDoctorCard({ item }))}
-          <TouchableOpacity style={styles.showMoreButton}>
-            <Text style={styles.showMoreButtonText}>Show all Doctors </Text>
-            <FontAwesome name="arrow-right" size={15} color="#fff" />
-          </TouchableOpacity>
+          {doctorsData.map((item, index) => (
+            <View key={index}>{renderDoctorCard({ item })}</View>
+          ))}
         </View>
       </ScrollView>
     </View>
@@ -88,7 +59,6 @@ export default DoctorsList;
 
 const styles = StyleSheet.create({
   doctorsContainer: {
-    // paddingHorizontal: 10,
     marginTop: 20,
   },
   doctorsTitle: {
@@ -122,7 +92,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 10,
   },
-  learnMoreButton:{
+  learnMoreButton: {
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "#00b894",
@@ -131,7 +101,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     justifyContent: "center",
   },
-  learnMoreButtonText:{
+  learnMoreButtonText: {
     fontSize: 14,
     fontWeight: "bold",
     color: "#fff",
@@ -141,19 +111,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#ddd",
     borderRadius: 10,
-    // padding: 6,
     marginLeft: 10,
     marginTop: 10,
     justifyContent: "center",
+    padding: 10,
   },
-
   showMoreButtonText: {
     fontSize: 14,
     fontWeight: "bold",
     color: "#000",
   },
-
   arrowIcon: {
-    marginLeft: 5, // Add some spacing between text and arrow
+    marginLeft: 5,
   },
 });

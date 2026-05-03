@@ -7,15 +7,20 @@ import {
   TouchableOpacity,
   Modal,
   Button,
+  ScrollView,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { Camera } from "expo-camera";
+import * as ImagePicker from "expo-image-picker";
 import CustomButton from "../components/CustomButton";
+import { useAuth } from "../AuthContext";
+import { colors } from "../components/styles/Theme";
 
 const ProfileScreen = ({ navigation }) => {
   const [image, setImage] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const { bookedAppointment } = useAuth();
 
   const [cameraPermission, requestPermission] = Camera.useCameraPermissions();
 
@@ -48,11 +53,11 @@ const ProfileScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity
             style={styles.backButton}
-            onPress={() => navigation.goBack()} // Use the navigation prop
+            onPress={() => navigation.goBack()}
           >
             <Ionicons name="ios-arrow-back" size={30} color="#555" />
           </TouchableOpacity>
@@ -78,7 +83,37 @@ const ProfileScreen = ({ navigation }) => {
           <Text style={styles.infoText}>Phone: +123 456 7890</Text>
           <Text style={styles.infoText}>Date of Birth: 01-Jan-1990</Text>
         </View>
-      </View>
+
+        {/* Booked Appointment Section */}
+        {bookedAppointment && (
+          <View style={styles.appointmentContainer}>
+            <Text style={styles.appointmentTitle}>Your Appointment</Text>
+            <View style={styles.appointmentCard}>
+              <Image
+                source={{ uri: bookedAppointment.doctorPhoto }}
+                style={styles.doctorImage}
+              />
+              <View style={styles.appointmentDetails}>
+                <Text style={styles.doctorName}>
+                  {bookedAppointment.doctorName}
+                </Text>
+                <Text style={styles.specialization}>
+                  {bookedAppointment.specialization} Specialist
+                </Text>
+                <Text style={styles.appointmentInfo}>
+                  📅 {bookedAppointment.appointmentDate}
+                </Text>
+                <Text style={styles.appointmentInfo}>
+                  ⏰ {bookedAppointment.appointmentTime}
+                </Text>
+                <Text style={styles.appointmentInfo}>
+                  📍 {bookedAppointment.location}
+                </Text>
+              </View>
+            </View>
+          </View>
+        )}
+      </ScrollView>
 
       {/* Modal for Image Picker and Camera */}
       <Modal
@@ -160,6 +195,51 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  appointmentContainer: {
+    marginTop: 30,
+    paddingTop: 20,
+    borderTopWidth: 1,
+    borderTopColor: "#e0e0e0",
+  },
+  appointmentTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#333",
+    marginBottom: 15,
+  },
+  appointmentCard: {
+    flexDirection: "row",
+    backgroundColor: "#f9f9f9",
+    borderRadius: 12,
+    padding: 15,
+    borderWidth: 1,
+    borderColor: "#e0e0e0",
+  },
+  doctorImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    marginRight: 15,
+  },
+  appointmentDetails: {
+    flex: 1,
+  },
+  doctorName: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#333",
+    marginBottom: 4,
+  },
+  specialization: {
+    fontSize: 14,
+    color: colors.color_primary,
+    marginBottom: 8,
+  },
+  appointmentInfo: {
+    fontSize: 14,
+    color: "#555",
+    marginBottom: 4,
   },
 });
 

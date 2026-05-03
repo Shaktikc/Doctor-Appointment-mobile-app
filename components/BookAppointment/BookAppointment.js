@@ -16,11 +16,13 @@ import { getAvailableSlotsForDoctor } from "../../data/DoctorAvailability";
 import { Ionicons } from "@expo/vector-icons";
 import { getTimeListFromDatabase } from "./utils/getTimeListFromDatabase";
 import { getServiceAppointments } from "./utils/getServiceAppointments";
+import { useAuth } from "../../AuthContext";
 
 export default function BookAppointment({ route, navigation }) {
     const doctor = route?.params?.doctor;
     const serviceId = doctor.id;
     const scrollViewRef = useRef(null);
+    const { saveAppointment } = useAuth();
 
     const [loading, setLoading] = useState(false);
     const [selectedDate, setSelectedDate] = useState(null);
@@ -64,6 +66,18 @@ export default function BookAppointment({ route, navigation }) {
 
     const onTimeSelect = (time) => {
         setSelectedTime(time);
+        
+        // Save appointment to context
+        const appointmentData = {
+            doctorName: doctor.name,
+            doctorPhoto: doctor.photo,
+            specialization: doctor.categories[0],
+            location: doctor.location,
+            appointmentDate: selectedDate,
+            appointmentTime: time,
+            bookedDate: moment().format("YYYY-MM-DD HH:mm:ss"),
+        };
+        saveAppointment(appointmentData);
     };
 
     return (
@@ -189,6 +203,7 @@ export default function BookAppointment({ route, navigation }) {
                     </View>
                 )}
             </ScrollView>
+
         </View>
     );
 }

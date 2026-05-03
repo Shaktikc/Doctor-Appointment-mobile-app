@@ -14,10 +14,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { EvilIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "react-native-vector-icons";
 import { FontAwesome } from "react-native-vector-icons";
-import Featured from "../components/Featured";
-import Recommendations from "../components/Recommendations";
 import TopDoctor from "../components/TopDoctor";
-import ServicesList from "../components/ServicesList";
 import TestimonialList from "../components/TestimonialList";
 
 const HomeScreen = () => {

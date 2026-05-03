@@ -17,13 +17,13 @@ import { getAvailableSlotsForDoctor } from "../../data/DoctorAvailability";
 import { Ionicons } from "@expo/vector-icons";
 import { getTimeListFromDatabase } from "./utils/getTimeListFromDatabase";
 import { getServiceAppointments } from "./utils/getServiceAppointments";
-import { useAuth } from "../../AuthContext";
+import { useBookAppointment } from "../../BookAppointmentContext";
 
 export default function BookAppointment({ route, navigation }) {
     const doctor = route?.params?.doctor;
     const serviceId = doctor.id;
     const scrollViewRef = useRef(null);
-    const { saveAppointment, bookedAppointments, isSlotBooked } = useAuth();
+    const { saveAppointment, bookedAppointments, isSlotBooked } = useBookAppointment();
 
     const [loading, setLoading] = useState(false);
     const [selectedDate, setSelectedDate] = useState(null);

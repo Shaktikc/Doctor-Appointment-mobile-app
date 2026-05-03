@@ -3,7 +3,8 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import AppNavigation from "./components/AppNavigation";
 import { NavigationContainer } from "@react-navigation/native";
 import { useState } from "react";
-import { AuthProvider } from "./AuthContext";
+import { BookAppointmentProvider } from "./BookAppointmentContext";
+
 
 export default function App() {
   const [userAuthenticated, setUserAuthenticated] = useState(false);
@@ -15,13 +16,11 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      <AuthProvider>
+      <BookAppointmentProvider>
         <NavigationContainer>
-       
             <AppNavigation />
-        
         </NavigationContainer>
-      </AuthProvider>
+      </BookAppointmentProvider>
     </SafeAreaProvider>
   );
 }

@@ -15,13 +15,14 @@ import { Ionicons } from "@expo/vector-icons";
 import { Camera } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
 import CustomButton from "../components/CustomButton";
-import { useAuth } from "../AuthContext";
+
 import { colors } from "../components/styles/Theme";
+import { useBookAppointment } from "../BookAppointmentContext";
 
 const MyAppointment = ({ navigation }) => {
   const [image, setImage] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
-  const { bookedAppointment, bookedAppointments, cancelAppointment } = useAuth();
+  const { bookedAppointment, bookedAppointments, cancelAppointment } = useBookAppointment();
 
   const [cameraPermission, requestPermission] = Camera.useCameraPermissions();
 

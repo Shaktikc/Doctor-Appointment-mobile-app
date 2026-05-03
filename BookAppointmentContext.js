@@ -9,16 +9,13 @@
 
 import React, { createContext, useContext, useState } from 'react';
 
-const AuthContext = createContext();
+const BookAppointmentContext = createContext();
 
-export const AuthProvider = ({ children }) => {
-  const [userAuthenticated, setUserAuthenticated] = useState(false);
+export const BookAppointmentProvider = ({ children }) => {
+
   const [bookedAppointment, setBookedAppointment] = useState(null);
   const [bookedAppointments, setBookedAppointments] = useState([]);
 
-  const updateAuthentication = (authenticated) => {
-    setUserAuthenticated(authenticated);
-  };
 
   /**
    * Save a single appointment and add to booked appointments list
@@ -91,10 +88,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider 
+    <BookAppointmentContext.Provider 
       value={{ 
-        userAuthenticated, 
-        updateAuthentication,
         bookedAppointment,
         bookedAppointments,
         saveAppointment,
@@ -105,10 +100,10 @@ export const AuthProvider = ({ children }) => {
       }}
     >
       {children}
-    </AuthContext.Provider>
+    </BookAppointmentContext.Provider>
   );
 };
 
-export const useAuth = () => {
-  return useContext(AuthContext);
+export const useBookAppointment = () => {
+  return useContext(BookAppointmentContext);
 };

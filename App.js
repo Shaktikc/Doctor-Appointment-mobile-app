@@ -1,25 +1,24 @@
 import { StyleSheet } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import AppNavigation from "./components/AppNavigation";
 import { NavigationContainer } from "@react-navigation/native";
-import { useState } from "react";
-import { BookAppointmentProvider } from "./BookAppointmentContext";
+import FlashMessage from "react-native-flash-message";
 
+import AppNavigation from "./src/navigation/AppNavigation";
+import { BookAppointmentProvider } from "./src/context/BookAppointmentContext";
 
+/**
+ * Root App Component
+ * Entry point of the application
+ * Sets up navigation, providers, and global styling
+ */
 export default function App() {
-  const [userAuthenticated, setUserAuthenticated] = useState(false);
-
-  // Function to update authentication state after successful login or signup
-  const updateAuthentication = (authenticated) => {
-    setUserAuthenticated(authenticated);
-  };
-
   return (
     <SafeAreaProvider>
       <BookAppointmentProvider>
         <NavigationContainer>
-            <AppNavigation />
+          <AppNavigation />
         </NavigationContainer>
+        <FlashMessage position="top" />
       </BookAppointmentProvider>
     </SafeAreaProvider>
   );

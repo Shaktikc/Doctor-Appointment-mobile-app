@@ -36,12 +36,7 @@ import { doctorDataWithSchedule } from "./data";
   });
 };
 
-/**
- * Generate time slots between two times (30-minute intervals)
- * @param {string} startTime - Start time in "HH:MM" format
- * @param {string} endTime - End time in "HH:MM" format
- * @returns {string[]} Array of time slots in "HH:MM" format
- */
+
 const generateTimeSlots = (startTime, endTime) => {
   const slots = [];
   const [startHour, startMinute] = startTime.split(":").map(Number);

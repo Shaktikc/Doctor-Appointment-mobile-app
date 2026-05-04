@@ -1,3 +1,3 @@
 // Central exports for data
-export { doctorsData, DOCTOR_AVAILABILITY } from "./data";
+export { getAllDoctors } from "./getAllDoctors";
 export { getAvailableSlotsForDoctor } from "./DoctorAvailability";

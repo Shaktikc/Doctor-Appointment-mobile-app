@@ -1,6 +1,6 @@
 
 
-import { doctorDataWithSchedule, doctorsData } from "./data";
+import { doctorDataWithSchedule } from "./data";
 
 
  const getDayOfWeekInTimezone = (dateString, timezone) => {
@@ -63,9 +63,7 @@ export const getAvailableSlotsForDoctor = (doctorName, dateString) => {
 };
 
 
-export const getAllDoctors = () => {
-  return doctorsData;
-};
+
 
 
 export const getAvailableTimeSlotsWithBookedStatus = (

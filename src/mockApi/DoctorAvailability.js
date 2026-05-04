@@ -69,7 +69,7 @@ const generateTimeSlots = (startTime, endTime) => {
 };
 
 
-export const getAvailableSlotsForDoctor = (doctorName, dateString) => {
+ const getAvailableSlotsForDoctor = (doctorName, dateString) => {
   const doctor = doctorDataWithSchedule.find((d) => d.name === doctorName);
   if (!doctor) return [];
 

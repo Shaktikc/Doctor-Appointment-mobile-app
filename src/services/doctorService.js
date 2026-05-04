@@ -1,11 +1,11 @@
 /**
- * Appointment Service
+ * Doctor Services
  * Handles doctor-related operations and appointment availability
  */
 
-import { doctorsData } from "../../../mock/data";
-import { getAvailableSlotsForDoctor } from "../../../mock/DoctorAvailability";
-import { formatTimeList, markBookedSlots } from "../../../utils/timeSlotUtils";
+import { doctorsData } from "../mock/data";
+import { getAvailableSlotsForDoctor } from "../mock/DoctorAvailability";
+import { formatTimeList, markBookedSlots } from "../utils/timeSlotUtils";
 
 /**
  * Get all doctors

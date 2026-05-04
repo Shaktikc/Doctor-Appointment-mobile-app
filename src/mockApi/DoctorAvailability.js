@@ -36,6 +36,38 @@ import { doctorDataWithSchedule } from "./data";
   });
 };
 
+/**
+ * Generate time slots between two times (30-minute intervals)
+ * @param {string} startTime - Start time in "HH:MM" format
+ * @param {string} endTime - End time in "HH:MM" format
+ * @returns {string[]} Array of time slots in "HH:MM" format
+ */
+const generateTimeSlots = (startTime, endTime) => {
+  const slots = [];
+  const [startHour, startMinute] = startTime.split(":").map(Number);
+  const [endHour, endMinute] = endTime.split(":").map(Number);
+
+  let currentHour = startHour;
+  let currentMinute = startMinute;
+  const endTotalMinutes = endHour * 60 + endMinute;
+
+  while (currentHour * 60 + currentMinute < endTotalMinutes) {
+    const timeString = `${String(currentHour).padStart(2, "0")}:${String(
+      currentMinute
+    ).padStart(2, "0")}`;
+    slots.push(timeString);
+
+    // Add 30-minute interval
+    currentMinute += 30;
+    if (currentMinute >= 60) {
+      currentMinute -= 60;
+      currentHour += 1;
+    }
+  }
+
+  return slots;
+};
+
 
 export const getAvailableSlotsForDoctor = (doctorName, dateString) => {
   const doctor = doctorDataWithSchedule.find((d) => d.name === doctorName);

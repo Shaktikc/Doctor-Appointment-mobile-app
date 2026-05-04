@@ -6,10 +6,4 @@ export {
   getAvailableTimeSlotsWithBookedStatus,
 } from "./doctorService";
 
-export {
-  validateAppointment,
-  prepareAppointmentForBooking,
-  cancelAppointmentFromList,
-  getAppointmentsForDoctor,
-  getUpcomingAppointments,
-} from "./appointmentService";
+

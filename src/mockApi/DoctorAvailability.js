@@ -11,7 +11,7 @@ import { doctorDataWithSchedule, doctorsData } from "./data";
  * @param {string} endTime - Time in HH:MM format (e.g., "17:30")
  * @returns {array} Array of time strings in HH:MM format
  */
-export const generateTimeSlots = (startTime, endTime) => {
+ const generateTimeSlots = (startTime, endTime) => {
   const slots = [];
   const [startHour, startMin] = startTime.split(":").map(Number);
   const [endHour, endMin] = endTime.split(":").map(Number);
@@ -37,7 +37,7 @@ export const generateTimeSlots = (startTime, endTime) => {
  * @param {string} timezone - Timezone string (e.g., "Australia/Sydney")
  * @returns {string} Day of week (Monday, Tuesday, etc.)
  */
-export const getDayOfWeekInTimezone = (dateString, timezone) => {
+ const getDayOfWeekInTimezone = (dateString, timezone) => {
   const date = new Date(dateString + "T00:00:00Z");
   const formatter = new Intl.DateTimeFormat("en-US", {
     weekday: "long",
@@ -51,7 +51,7 @@ export const getDayOfWeekInTimezone = (dateString, timezone) => {
  * @param {array} availableSlots - Array of available time slots
  * @returns {array} Formatted time list with id and apptime
  */
-export const formatTimeList = (availableSlots) => {
+ const formatTimeList = (availableSlots) => {
   return availableSlots.map((time, index) => ({
     id: index + 1,
     apptime: time,
@@ -66,7 +66,7 @@ export const formatTimeList = (availableSlots) => {
  * @param {string} appointmentDate - Date in YYYY-MM-DD format
  * @returns {array} Time list with isBooked flag
  */
-export const markBookedSlots = (timeList, bookedAppointments, doctorName, appointmentDate) => {
+ const markBookedSlots = (timeList, bookedAppointments, doctorName, appointmentDate) => {
   return timeList.map((time) => {
     const isBooked = bookedAppointments.some(
       (apt) =>

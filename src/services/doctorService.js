@@ -4,8 +4,7 @@
  */
 
 import { doctorsData } from "../mockApi/data";
-import { getAvailableSlotsForDoctor } from "../mockApi/DoctorAvailability";
-import { formatTimeList, markBookedSlots } from "../utils/timeSlotUtils";
+import { getAvailableSlotsForDoctor, formatTimeList, markBookedSlots } from "../mockApi/DoctorAvailability";
 
 /**
  * Get all doctors

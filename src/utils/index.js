@@ -6,7 +6,7 @@ export {
   getDayOfWeekInTimezone,
   formatTimeList,
   markBookedSlots,
-} from "./timeSlotUtils";
+} from "../mockApi/DoctorAvailability";
 export {
   showErrorMessage,
   showSuccessMessage,

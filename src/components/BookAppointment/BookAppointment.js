@@ -16,7 +16,7 @@ import Button from "../Button/Button";
 import TimeSlot from "../TimeSlot";
 import { colors } from "../../styles/Theme";
 import { useBookAppointment } from "../../hooks/useBookAppointment";
-import { getAvailableAppointmentsForDate } from "./utils/appointmentService";
+import { getAvailableTimeSlotsWithBookedStatus } from "../../services";
 import { APPOINTMENT_BOOKING_RANGE_MONTHS } from "../../constants/config";
 
 /**
@@ -49,7 +49,7 @@ export default function BookAppointment({ route, navigation }) {
       setSelectedTime(null);
 
       // Get available appointments for selected date
-      const timeList = getAvailableAppointmentsForDate(
+      const timeList = getAvailableTimeSlotsWithBookedStatus(
         doctor.name,
         day.dateString,
         bookedAppointments

@@ -1,6 +1,6 @@
 /**
  * Doctor Services
- * Handles all doctor-related API calls and data retrieval
+ * Handles doctor-related operations and appointment availability
  */
 
 import { doctorsData } from "../data/data";
@@ -16,32 +16,7 @@ export const getAllDoctors = () => {
 };
 
 /**
- * Get a doctor by ID
- * @param {string} doctorId - Doctor's ID
- * @returns {object} Doctor object
- */
-export const getDoctorById = (doctorId) => {
-  return doctorsData.find((doctor) => doctor.id === doctorId);
-};
-
-/**
- * Get available time slots for a doctor on a specific date
- * @param {string} doctorName - Doctor's name
- * @param {string} dateString - Date in YYYY-MM-DD format
- * @returns {array} Available time slots
- */
-export const getAvailableTimeSlotsForDoctor = (doctorName, dateString) => {
-  try {
-    const availableSlots = getAvailableSlotsForDoctor(doctorName, dateString);
-    return formatTimeList(availableSlots);
-  } catch (error) {
-    console.error("Error fetching available time slots:", error);
-    return [];
-  }
-};
-
-/**
- * Get available time slots with booked status
+ * Get available time slots with booked status for a doctor
  * @param {string} doctorName - Doctor's name
  * @param {string} dateString - Date in YYYY-MM-DD format
  * @param {array} bookedAppointments - List of booked appointments
@@ -60,11 +35,4 @@ export const getAvailableTimeSlotsWithBookedStatus = (
     console.error("Error fetching time slots with booked status:", error);
     return [];
   }
-};
-
-export default {
-  getAllDoctors,
-  getDoctorById,
-  getAvailableTimeSlotsForDoctor,
-  getAvailableTimeSlotsWithBookedStatus,
 };

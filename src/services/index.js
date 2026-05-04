@@ -2,6 +2,6 @@
 export {
   getAllDoctors,
   getAvailableTimeSlotsWithBookedStatus,
-} from "../mock/DoctorAvailability";
+} from "../mockApi/DoctorAvailability";
 
 

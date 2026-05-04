@@ -3,8 +3,8 @@
  * Handles doctor-related operations and appointment availability
  */
 
-import { doctorsData } from "../mock/data";
-import { getAvailableSlotsForDoctor } from "../mock/DoctorAvailability";
+import { doctorsData } from "../mockApi/data";
+import { getAvailableSlotsForDoctor } from "../mockApi/DoctorAvailability";
 import { formatTimeList, markBookedSlots } from "../utils/timeSlotUtils";
 
 /**

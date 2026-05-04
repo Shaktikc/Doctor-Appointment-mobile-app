@@ -6,11 +6,13 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  Button,
 } from "react-native";
 import { FontAwesome, MaterialIcons, Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
-import CustomButton from "../components/CustomButton";
+import { BoookingButton } from "../components";
+
 
 /**
  * DoctorDetailsScreen Component
@@ -137,7 +139,7 @@ const DoctorDetails = ({ route }) => {
 
       {/* Book Button */}
       <View style={styles.buttonContainer}>
-        <CustomButton title="Book Appointment" onPress={handleBookAppointment} />
+        <Button title="Book Appointment" onPress={handleBookAppointment} />
       </View>
     </SafeAreaView>
   );

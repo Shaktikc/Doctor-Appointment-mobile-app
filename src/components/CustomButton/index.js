@@ -1,4 +1,2 @@
-/**
- * CustomButton Component Exports
- */
-export { default } from "./CustomButton";
+
+export { default } from "./BoookingButton";

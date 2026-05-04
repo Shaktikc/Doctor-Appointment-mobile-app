@@ -9,7 +9,9 @@ import {
   MyAppointment,
   DoctorDetailsScreen,
 } from "../screens";
-import BookAppointment from "../components/BookAppointment";
+import BookAppointment from "../screens/BookAppointment";
+
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();

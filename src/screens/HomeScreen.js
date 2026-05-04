@@ -13,12 +13,17 @@ import { BlurView } from "expo-blur";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { EvilIcons, FontAwesome5, FontAwesome } from "@expo/vector-icons";
 import { TopDoctor, TestimonialList } from "../components";
+import { useNavigation } from "@react-navigation/native";
 
 /**
  * HomeScreen Component
  * Main landing screen displaying doctors and testimonials
  */
 const HomeScreen = () => {
+  const navigation = useNavigation();
+  onBookAppointmentPress = () => {
+    navigation.navigate("Doctor Lists");
+  }
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView>

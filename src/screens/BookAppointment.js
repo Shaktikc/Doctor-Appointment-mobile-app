@@ -12,12 +12,14 @@ import { Calendar } from "react-native-calendars";
 import moment from "moment";
 import { Ionicons } from "@expo/vector-icons";
 
-import Button from "../Button/Button";
-import TimeSlot from "../TimeSlot";
-import { colors } from "../../styles/Theme";
-import { useBookAppointment } from "../../hooks/useBookAppointment";
-import { APPOINTMENT_BOOKING_RANGE_MONTHS } from "../../constants/config";
-import { getAvailableTimeSlotsWithBookedStatus } from "../../mockApi";
+
+
+import { colors } from "../styles/Theme";
+import { useBookAppointment } from "../hooks/useBookAppointment";
+import { APPOINTMENT_BOOKING_RANGE_MONTHS } from "../constants/config";
+import { getAvailableTimeSlotsWithBookedStatus } from "../mockApi";
+import {  BoookingButton, CustomButton, TimeSlot } from "../components";
+
 
 /**
  * BookAppointment Screen
@@ -225,7 +227,7 @@ export default function BookAppointment({ route, navigation }) {
 
       {/* Book Button */}
       <View style={styles.button_container}>
-        <Button text={"Book"} onPress={onBook} />
+        <BoookingButton text={"Book"} onPress={onBook} />
       </View>
     </View>
   );

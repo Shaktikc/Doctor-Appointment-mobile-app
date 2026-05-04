@@ -34,34 +34,8 @@ const DoctorLists = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
-        {/* Search Input with Search Icon */}
-        <View style={styles.searchInputContainer}>
-          <Feather
-            name="search"
-            size={20}
-            color="#00b894"
-            style={styles.searchIcon}
-          />
-          <TextInput
-            style={styles.searchInput}
-            placeholder="Search Doctors"
-            value={searchText}
-            onChangeText={(text) => setSearchText(text)}
-          />
-        </View>
-
         {/* Category Menu (Horizontal Scroll) */}
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={styles.categoryMenu}
-        >
-          {categories.map((category, index) => (
-            <TouchableOpacity key={index} style={styles.categoryButton}>
-              <Text style={styles.categoryButtonText}>{category}</Text>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
+
 
         <Text style={styles.title}>All Doctors</Text>
         <ScrollView

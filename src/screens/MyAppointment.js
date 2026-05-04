@@ -13,7 +13,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { Camera } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
-import CustomButton from "../components/CustomButton";
+import CustomButton from "../components";
 import { colors } from "../styles/Theme";
 import { useBookAppointment } from "../hooks/useBookAppointment";
 
@@ -92,7 +92,7 @@ const MyAppointment = ({ navigation }) => {
           >
             <Ionicons name="ios-arrow-back" size={30} color="#555" />
           </TouchableOpacity>
-          <Text style={styles.headerText}>My Profile</Text>
+          <Text style={styles.headerText}>My Appointments</Text>
         </View>
 
         {/* Profile Image */}

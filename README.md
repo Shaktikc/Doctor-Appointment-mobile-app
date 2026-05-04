@@ -1,203 +1,119 @@
-# 🏥 Doctor Appointment Booking App
+Here's a condensed version of the README:
 
-A React Native + Expo mobile app for scheduling doctor appointments. Users can browse doctors, view available 30-minute slots, book appointments, and manage bookings with persistent local storage.
+---
 
-Built as part of the **ShiftCare Technical Challenge**.
+# 🏥 Doctor Appointment Booking App — ShiftCare Technical Challenge
+
+A React Native + Expo app for booking 30-minute doctor appointments with offline persistence.
 
 ---
 
 ## ✨ Features
 
-* Browse active doctors from ShiftCare API
-* View real-time 30-minute availability slots
-* Book appointments with confirmation flow
-* Prevent double-booking of slots
-* Persist bookings using AsyncStorage
-* View & cancel appointments
-* Loading and error handling states
-* Responsive mobile-first UI
+- Browse active doctors from ShiftCare API
+- View & select 30-minute availability slots by day
+- Book, confirm, and cancel appointments
+- Double-booking prevention (per doctor & per slot)
+- Offline persistence via AsyncStorage (survives app restart)
 
 ---
 
-## 🛠️ Tech Stack
+## 🏗️ Project Structure
 
-* **React Native**
-* **Expo**
-* **React Navigation**
-* **Context API**
-* **AsyncStorage**
-* **Moment.js**
-* **React Native Calendars**
+```
+src/
+├── screens/          # HomeScreen, DoctorDetails, BookAppointment, MyAppointment
+├── components/       # CustomButton, TimeSlot, TopDoctor, ErrorHandler
+├── navigation/       # Stack & Tab navigation (AppNavigation.js)
+├── context/          # BookAppointmentContext (global booking state)
+├── hooks/            # useBookAppointment (appointment logic)
+├── mockApi/          # API fetch + 30-min slot generation
+├── constants/        # colors, config (API_URL, booking range)
+├── storage/          # AsyncStorage persistence layer
+└── styles/           # Theme, Fonts
+```
 
 ---
 
 ## 📡 API
 
-```txt
-https://raw.githubusercontent.com/suyogshiftcare/jsontest/main/available.json
-```
+**Endpoint**: `https://raw.githubusercontent.com/suyogshiftcare/jsontest/main/available.json`
 
----
-
-## 📁 Project Structure
-
-```bash
-src/
-├── screens/
-├── components/
-├── navigation/
-├── context/
-├── hooks/
-├── mockApi/
-├── constants/
-├── storage/
-└── styles/
-```
+Returns a list of doctors with `id`, `name`, `specialty`, `photo`, `location`, and `availableSlots` (day + start/end times). The app converts these into 30-minute slots.
 
 ---
 
 ## 🚀 Getting Started
 
-### Prerequisites
-
-* Node.js v18+
-* npm or yarn
-* Expo CLI
-
-### Installation
-
 ```bash
-git clone <repository-url>
-cd Appointment-Booking-app-
 npm install
-```
-
-### Start App
-
-```bash
 npx expo start --clear
+# Press i (iOS), a (Android), or w (Web)
 ```
 
-Run on:
-
-* `i` → iOS Simulator
-* `a` → Android Emulator
-* `w` → Web
+**Prerequisites**: Node.js v18+, Expo CLI
 
 ---
 
-## 📱 User Flow
+## 📊 State & Persistence
 
-1. Browse doctors
-2. View availability
-3. Select date & 30-min slot
-4. Confirm booking
-5. Manage appointments
+Uses **Context API** for global state. Bookings are saved to AsyncStorage on every change and reloaded on app start.
 
-
----
-
-## 🧠 State Management
-
-Uses **React Context API** for global booking state .
-
-### Stored Appointment Example
-
-```js
-{
-  id,
-  doctorName,
-  appointmentDate,
-  appointmentTime,
-  specialization,
-  location
-}
 ```
+saveAppointment() → AsyncStorage.setItem('bookings', ...) → persists across restarts
+```
+
+**Booking shape**: `{ id, doctorName, doctorPhoto, specialization, location, appointmentDate, appointmentTime, bookedDate }`
 
 ---
 
 ## ⏰ Slot Generation
 
-Doctor schedules are converted into 30-minute intervals.
+Doctor schedules (e.g. Mon 09:00–17:00) are split into 30-minute slots. Booked slots are filtered from AsyncStorage before display.
 
-Example:
-
-```txt
-09:00 - 17:00
-↓
-09:00-09:30
-09:30-10:00
-10:00-10:30
-...
-```
-
----
-
-## 🛡️ Booking Rules
-
-* Prevents duplicate bookings
-* Prevents booking already reserved slots
-* Bookings survive app restart via AsyncStorage
+**Double-booking prevention**:
+- One appointment per doctor per user
+- One booking per doctor + date + time combination
 
 ---
 
 ## 🧪 Testing
 
-Covered areas include:
-
-* Slot generation
-* Double-booking prevention
-* Persistence
-* API failures
-* Appointment cancellation
-
-Run tests:
-
 ```bash
-npm test
+npm test              # Run all tests
+npm test -- --coverage
 ```
 
----
-
-## 💭 Why JavaScript Instead of TypeScript?
-
-TypeScript was recommended, but JavaScript was chosen to prioritize:
-
-* Faster development
-* Core functionality delivery
-* Cleaner iteration during the challenge
-
-The app architecture is modular and ready for future TypeScript migration.
+Coverage includes slot generation edge cases, booking/cancellation flows, API error scenarios, and AsyncStorage failure handling.
 
 ---
 
-## ⚠️ Current Limitations
+## ⚠️ Known Limitations
 
-* No backend/database
-* No authentication
-* No real-time sync
-* Fixed 30-minute appointments
-* Local-device storage only
-
----
-
-## 🚀 Future Improvements
-
-* TypeScript migration
-* Backend API integration
-* Authentication system
-* Push notifications
-* Redux Toolkit
-* Real-time updates
-* Search & filtering
-* Video consultations
+| Limitation | Fix |
+|---|---|
+| Local-only storage (no cloud sync) | Backend API + database |
+| No user authentication | JWT/OAuth auth system |
+| Fixed 30-min slot duration | Configurable duration |
+| No retry on API failure | Exponential backoff |
+| No real-time slot updates | WebSockets or polling |
 
 ---
 
-## 📄 License
+## 💭 JavaScript vs TypeScript
 
-MIT License
+JavaScript was chosen to prioritise shipping core functionality within the time constraint. The codebase is structured for straightforward TypeScript migration (modular files, clear data flows). Trade-offs include no compile-time type checking and increased reliance on runtime validation.
+
+**Mitigation**: API response validation, centralised utility functions, and defensive checks are implemented throughout.
 
 ---
 
-Built with 💚 for the ShiftCare Technical Challenge
+## 🔮 Future Roadmap
+
+**Phase 1**: Backend API, user auth, Redux Toolkit, retry logic  
+**Phase 2**: Push notifications, doctor search/filter, ratings  
+**Phase 3**: Video consultations, payments, admin dashboard
+
+---
+
+*Built for the ShiftCare Technical Challenge*

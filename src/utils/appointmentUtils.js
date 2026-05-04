@@ -2,16 +2,7 @@
  * Appointment utilities for managing appointment logic
  */
 
-/**
- * Create a unique key for an appointment
- * @param {string} doctorName - Doctor's name
- * @param {string} appointmentDate - Date in YYYY-MM-DD format
- * @param {string} appointmentTime - Time in HH:MM format
- * @returns {string} Unique appointment key
- */
-export const createAppointmentKey = (doctorName, appointmentDate, appointmentTime) => {
-  return `${doctorName}|${appointmentDate}|${appointmentTime}`;
-};
+
 
 /**
  * Check if a slot is already booked in the appointments list

@@ -16,8 +16,8 @@ import Button from "../Button/Button";
 import TimeSlot from "../TimeSlot";
 import { colors } from "../../styles/Theme";
 import { useBookAppointment } from "../../hooks/useBookAppointment";
-import { getAvailableTimeSlotsWithBookedStatus } from "../../services";
 import { APPOINTMENT_BOOKING_RANGE_MONTHS } from "../../constants/config";
+import { getAvailableTimeSlotsWithBookedStatus } from "../../mockApi";
 
 /**
  * BookAppointment Screen
@@ -85,14 +85,7 @@ export default function BookAppointment({ route, navigation }) {
       Alert.alert(
         "Slot Unavailable",
         "Sorry, this time slot has just been booked by another user. Please select a different time.",
-        [
-          {
-            text: "OK",
-            onPress: () => {
-              setSelectedTime(null);
-            },
-          },
-        ]
+        [{ text: "OK", onPress: () => setSelectedTime(null) }]
       );
       return;
     }
@@ -102,15 +95,10 @@ export default function BookAppointment({ route, navigation }) {
       "Confirm Booking",
       `Are you sure you want to book this appointment?\n\nDoctor: ${doctor.name}\nDate: ${selectedDate}\nTime: ${selectedTime}`,
       [
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
+        { text: "Cancel", style: "cancel" },
         {
           text: "Book",
-          onPress: () => {
-            performBooking();
-          },
+          onPress: performBooking,
           style: "default",
         },
       ]
@@ -130,8 +118,8 @@ export default function BookAppointment({ route, navigation }) {
       return;
     }
 
-    // Create appointment data
-    const appointmentData = {
+    // Create and save appointment
+    saveAppointment({
       doctorName: doctor.name,
       doctorPhoto: doctor.photo,
       specialization: doctor.categories[0],
@@ -139,18 +127,13 @@ export default function BookAppointment({ route, navigation }) {
       appointmentDate: selectedDate,
       appointmentTime: selectedTime,
       bookedDate: moment().format("YYYY-MM-DD HH:mm:ss"),
-    };
+    });
 
-    // Save appointment
-    saveAppointment(appointmentData);
-
-    // Show success message and navigate
+    // Show success and navigate
     Alert.alert("Success", "Your appointment has been booked successfully!", [
       {
         text: "OK",
-        onPress: () => {
-          navigation.navigate("My Appointments");
-        },
+        onPress: () => navigation.navigate("My Appointments"),
       },
     ]);
   };

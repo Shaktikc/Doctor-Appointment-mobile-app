@@ -9,8 +9,7 @@
  * - Appointments are booked in the doctor's local timezone, not the user's
  */
 
-import React, { createContext, useCallback, useState } from "react";
-import { isSlotBooked, formatAppointmentData } from "../utils/appointmentUtils";
+import React, { createContext, useCallback, useState, useMemo } from "react";
 
 const BookAppointmentContext = createContext();
 
@@ -19,55 +18,56 @@ export const BookAppointmentProvider = ({ children }) => {
   const [bookedAppointments, setBookedAppointments] = useState([]);
 
   /**
-   * Save a single appointment and add to booked appointments list
-   * @param {object} appointmentData - Appointment data including doctorName, date, time, etc.
-   */
-  const saveAppointment = useCallback((appointmentData) => {
-    setBookedAppointment(appointmentData);
-    addBookedAppointment(appointmentData);
-  }, []);
-
-  /**
-   * Add appointment to the list of booked appointments
-   * Prevents double-booking by checking doctor + date + time combination
-   * @param {object} appointment - Appointment details
-   * @returns {boolean} True if added successfully, false if already booked
-   */
-  const addBookedAppointment = useCallback((appointment) => {
-    // Create a unique key for this appointment: doctorName + date + time
-    const appointmentKey = `${appointment.doctorName}|${appointment.appointmentDate}|${appointment.appointmentTime}`;
-
-    // Check if this slot is already booked
-    setBookedAppointments((prevAppointments) => {
-      const isDoubleBooked = prevAppointments.some((apt) => {
-        const existingKey = `${apt.doctorName}|${apt.appointmentDate}|${apt.appointmentTime}`;
-        return existingKey === appointmentKey;
-      });
-
-      if (isDoubleBooked) {
-        console.warn("This time slot is already booked!");
-        return prevAppointments;
-      }
-
-      // Add the appointment with a unique ID
-      const newAppointment = formatAppointmentData(appointment);
-      return [...prevAppointments, newAppointment];
-    });
-  }, []);
-
-  /**
    * Check if a specific doctor/date/time slot is already booked
    * @param {string} doctorName - Doctor's name
    * @param {string} date - Date in YYYY-MM-DD format
    * @param {string} time - Time in HH:MM format
    * @returns {boolean} True if slot is booked, false otherwise
    */
-  const checkSlotBooked = useCallback(
+  const isSlotBooked = useCallback(
     (doctorName, date, time) => {
-      return isSlotBooked(bookedAppointments, doctorName, date, time);
+      return bookedAppointments.some(
+        (apt) =>
+          apt.doctorName === doctorName &&
+          apt.appointmentDate === date &&
+          apt.appointmentTime === time
+      );
     },
     [bookedAppointments]
   );
+
+  /**
+   * Save a single appointment and add to booked appointments list
+   * @param {object} appointmentData - Appointment data including doctorName, date, time, etc.
+   */
+  const saveAppointment = useCallback((appointmentData) => {
+    // Create appointment key to check for double-booking
+    const appointmentKey = `${appointmentData.doctorName}|${appointmentData.appointmentDate}|${appointmentData.appointmentTime}`;
+
+    setBookedAppointments((prevAppointments) => {
+      // Check if slot is already booked
+      const isAlreadyBooked = prevAppointments.some(
+        (apt) =>
+          `${apt.doctorName}|${apt.appointmentDate}|${apt.appointmentTime}` === appointmentKey
+      );
+
+      if (isAlreadyBooked) {
+        console.warn("This time slot is already booked!");
+        return prevAppointments;
+      }
+
+      // Create new appointment with metadata
+      const newAppointment = {
+        ...appointmentData,
+        id: Date.now().toString(),
+        bookingTimestamp: new Date().toISOString(),
+      };
+
+      const updatedAppointments = [...prevAppointments, newAppointment];
+      setBookedAppointment(newAppointment);
+      return updatedAppointments;
+    });
+  }, []);
 
   /**
    * Clear the current appointment
@@ -89,15 +89,17 @@ export const BookAppointmentProvider = ({ children }) => {
     );
   }, []);
 
-  const value = {
-    bookedAppointment,
-    bookedAppointments,
-    saveAppointment,
-    clearAppointment,
-    cancelAppointment,
-    isSlotBooked: checkSlotBooked,
-    addBookedAppointment,
-  };
+  const value = useMemo(
+    () => ({
+      bookedAppointment,
+      bookedAppointments,
+      saveAppointment,
+      clearAppointment,
+      cancelAppointment,
+      isSlotBooked,
+    }),
+    [bookedAppointment, bookedAppointments, saveAppointment, clearAppointment, cancelAppointment, isSlotBooked]
+  );
 
   return (
     <BookAppointmentContext.Provider value={value}>

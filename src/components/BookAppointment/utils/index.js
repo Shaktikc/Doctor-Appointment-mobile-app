@@ -4,4 +4,4 @@
 export {
   getAllDoctors,
   getAvailableTimeSlotsWithBookedStatus,
-} from "./appointmentService";
+} from "./availableTimeSlot";

@@ -8,6 +8,7 @@ import {
   Modal,
   ScrollView,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
@@ -25,7 +26,7 @@ import { CustomButton } from "../components";
 const MyAppointment = ({ navigation }) => {
   const [image, setImage] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
-  const { bookedAppointments, cancelAppointment } = useBookAppointment();
+  const { bookedAppointments, cancelAppointment, isLoading } = useBookAppointment();
   const [cameraPermission, requestPermission] = Camera.useCameraPermissions();
 
   useEffect(() => {
@@ -73,8 +74,15 @@ const MyAppointment = ({ navigation }) => {
         {
           text: "Yes",
           onPress: () => {
-            cancelAppointment(appointment.id);
-            Alert.alert("Cancelled", "Your appointment has been cancelled.");
+            try {
+              // Cancel appointment - context handles AsyncStorage persistence
+              cancelAppointment(appointment.id);
+              Alert.alert("Cancelled", "Your appointment has been cancelled.");
+              console.log("✅ Appointment cancelled");
+            } catch (error) {
+              console.error("❌ Error cancelling appointment:", error);
+              Alert.alert("Error", "Failed to cancel appointment");
+            }
           },
           style: "destructive",
         },
@@ -84,7 +92,13 @@ const MyAppointment = ({ navigation }) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView style={styles.container}>
+      {isLoading ? (
+        <View style={[styles.container, { justifyContent: "center", alignItems: "center" }]}>
+          <ActivityIndicator size="large" color={colors.color_primary} />
+          <Text style={{ marginTop: 10, color: colors.color_primary }}>Loading appointments...</Text>
+        </View>
+      ) : (
+        <ScrollView style={styles.container}>
         {/* Header */}
         <View style={styles.header}>
           <TouchableOpacity
@@ -173,6 +187,7 @@ const MyAppointment = ({ navigation }) => {
           </View>
         )}
       </ScrollView>
+      )}
 
       {/* Modal for Image Selection */}
       <Modal

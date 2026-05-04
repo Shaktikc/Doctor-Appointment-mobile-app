@@ -107,25 +107,36 @@ export default function BookAppointment({ route, navigation }) {
   /**
    * Perform the actual booking
    */
-  const performBooking = () => {
-    // Create and save appointment
-    saveAppointment({
-      doctorName: doctor.name,
-      doctorPhoto: doctor.photo,
-      specialization: doctor.categories[0],
-      location: doctor.location,
-      appointmentDate: selectedDate,
-      appointmentTime: selectedTime,
-      bookedDate: moment().format("YYYY-MM-DD HH:mm:ss"),
-    });
+  const performBooking = async () => {
+    try {
+      // Create appointment object
+      const newAppointment = {
+        id: Date.now().toString(),
+        doctorName: doctor.name,
+        doctorPhoto: doctor.photo,
+        specialization: doctor.categories[0],
+        location: doctor.location,
+        appointmentDate: selectedDate,
+        appointmentTime: selectedTime,
+        bookedDate: moment().format("YYYY-MM-DD HH:mm:ss"),
+      };
 
-    // Show success and navigate
-    Alert.alert("Success", "Your appointment has been booked successfully!", [
-      {
-        text: "OK",
-        onPress: () => navigation.navigate("My Appointments"),
-      },
-    ]);
+      // Save to context - handles AsyncStorage persistence automatically
+      saveAppointment(newAppointment);
+      
+      console.log("✅ Appointment booked successfully");
+
+      // Show success and navigate
+      Alert.alert("Success", "Your appointment has been booked successfully!", [
+        {
+          text: "OK",
+          onPress: () => navigation.navigate("My Appointments"),
+        },
+      ]);
+    } catch (error) {
+      console.error("Booking error:", error);
+      Alert.alert("Error", "Failed to book appointment");
+    }
   };
 
   return (

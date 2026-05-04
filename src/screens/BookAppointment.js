@@ -18,13 +18,9 @@ import { colors } from "../styles/Theme";
 import { useBookAppointment } from "../hooks/useBookAppointment";
 import { APPOINTMENT_BOOKING_RANGE_MONTHS } from "../constants/config";
 import { getAvailableTimeSlotsWithBookedStatus } from "../mockApi";
-import {  BoookingButton, CustomButton, TimeSlot } from "../components";
+import {  TimeSlot } from "../components";
+import BoookingButton from "../components/CustomButton/BoookingButton";
 
-
-/**
- * BookAppointment Screen
- * Allows users to select date and time for booking an appointment
- */
 export default function BookAppointment({ route, navigation }) {
   const doctor = route?.params?.doctor;
   const scrollViewRef = useRef(null);

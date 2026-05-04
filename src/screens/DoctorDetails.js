@@ -11,7 +11,8 @@ import {
 import { FontAwesome, MaterialIcons, Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
-import { BoookingButton } from "../components";
+import CustomButton from "../components/CustomButton/CustomButton";
+
 
 
 /**
@@ -139,7 +140,7 @@ const DoctorDetails = ({ route }) => {
 
       {/* Book Button */}
       <View style={styles.buttonContainer}>
-        <Button title="Book Appointment" onPress={handleBookAppointment} />
+        <CustomButton title="Book Appointment" onPress={handleBookAppointment} />
       </View>
     </SafeAreaView>
   );

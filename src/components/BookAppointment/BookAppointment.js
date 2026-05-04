@@ -44,6 +44,14 @@ export default function BookAppointment({ route, navigation }) {
    */
   const onDateSelect = async (day) => {
     try {
+          // Check for double-booking
+    if (isSlotBooked(doctor.name)) {
+      Alert.alert(
+          `You have already booked this Doctor`,
+      );
+       navigation.navigate("Doctor Lists");
+      return;
+    }
       setLoading(true);
       setSelectedDate(day.dateString);
       setSelectedTime(null);
@@ -68,7 +76,9 @@ export default function BookAppointment({ route, navigation }) {
    * Handle time selection
    */
   const onTimeSelect = (time) => {
+    
     setSelectedTime(time);
+
   };
 
   /**
@@ -80,15 +90,6 @@ export default function BookAppointment({ route, navigation }) {
       return;
     }
 
-    // Check for double-booking
-    if (isSlotBooked(doctor.name, selectedDate, selectedTime)) {
-      Alert.alert(
-        "Slot Unavailable",
-        "Sorry, this time slot has just been booked by another user. Please select a different time.",
-        [{ text: "OK", onPress: () => setSelectedTime(null) }]
-      );
-      return;
-    }
 
     // Show confirmation alert
     Alert.alert(
@@ -109,15 +110,6 @@ export default function BookAppointment({ route, navigation }) {
    * Perform the actual booking
    */
   const performBooking = () => {
-    // Final double-check before booking
-    if (isSlotBooked(doctor.name, selectedDate, selectedTime)) {
-      Alert.alert(
-        "Booking Failed",
-        "This slot was just booked. Please try another time."
-      );
-      return;
-    }
-
     // Create and save appointment
     saveAppointment({
       doctorName: doctor.name,

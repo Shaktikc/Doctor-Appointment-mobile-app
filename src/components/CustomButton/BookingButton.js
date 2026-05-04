@@ -1,7 +1,7 @@
 import { ActivityIndicator, Text, TouchableOpacity } from "react-native";
 import styles from "./Button.style";
 
-export default function BoookingButton({onPress, loading, text, theme = "primary"}) {
+export default function BookingButton({onPress, loading, text, theme = "primary"}) {
     return (
         <TouchableOpacity
             style={styles[theme].container}

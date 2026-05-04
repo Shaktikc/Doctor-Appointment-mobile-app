@@ -13,9 +13,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { Camera } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
-import CustomButton from "../components";
+
 import { colors } from "../styles/Theme";
 import { useBookAppointment } from "../hooks/useBookAppointment";
+import { CustomButton } from "../components";
 
 /**
  * MyAppointment Screen

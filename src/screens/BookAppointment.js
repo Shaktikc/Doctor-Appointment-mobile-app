@@ -18,8 +18,8 @@ import { colors } from "../styles/Theme";
 import { useBookAppointment } from "../hooks/useBookAppointment";
 import { APPOINTMENT_BOOKING_RANGE_MONTHS } from "../constants/config";
 import { getAvailableTimeSlotsWithBookedStatus } from "../mockApi";
-import {  TimeSlot } from "../components";
-import BoookingButton from "../components/CustomButton/BoookingButton";
+import {  TimeSlot,BookingButton } from "../components";
+
 
 export default function BookAppointment({ route, navigation }) {
   const doctor = route?.params?.doctor;
@@ -223,7 +223,7 @@ export default function BookAppointment({ route, navigation }) {
 
       {/* Book Button */}
       <View style={styles.button_container}>
-        <BoookingButton text={"Book"} onPress={onBook} />
+        <BookingButton text={"Book"} onPress={onBook} />
       </View>
     </View>
   );

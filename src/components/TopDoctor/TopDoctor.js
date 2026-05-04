@@ -10,6 +10,7 @@ import React from "react";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
 import { getAllDoctors } from "../../mockApi";
+import { colors } from "../../styles/Theme";
 
 
 /**
@@ -88,7 +89,7 @@ const styles = StyleSheet.create({
   learnMoreButton: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#00b894",
+    backgroundColor: colors.color_primary,
     borderRadius: 10,
     padding: 10,
     marginTop: 10,

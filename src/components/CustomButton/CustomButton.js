@@ -1,5 +1,6 @@
 import React from "react";
 import { Text, Pressable, StyleSheet } from "react-native";
+import { colors } from "../../styles/Theme";
 
 /**
  * CustomButton Component
@@ -17,7 +18,7 @@ const styles = StyleSheet.create({
   button: {
     padding: 10,
     borderRadius: 5,
-    backgroundColor: "#00b894",
+    backgroundColor: colors.color_primary,
     color: "#fff",
     elevation: 5,
   },

@@ -54,8 +54,8 @@ const HomeScreen = () => {
                   </Text>
                 </TouchableOpacity>
               </View>
-              <TouchableOpacity style={styles.bookButton}>
-                <Text style={styles.bookButtonText}>Book an Appointment</Text>
+              <TouchableOpacity style={styles.bookButton} onPress={onBookAppointmentPress}>
+                <Text style={styles.bookButtonText} >Book an Appointment</Text>
               </TouchableOpacity>
             </View>
           </View>

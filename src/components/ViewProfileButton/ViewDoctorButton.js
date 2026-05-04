@@ -2,6 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
+import { colors } from "../../styles/Theme";
 
 const ViewDoctorButton = ({ doctor }) => {
   const navigation = useNavigation();
@@ -92,7 +93,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   learnMoreButton: {
-    backgroundColor: "#00b894",
+    backgroundColor: colors.color_primary,
     padding: 10,
     borderRadius: 20,
     flexDirection: "row",

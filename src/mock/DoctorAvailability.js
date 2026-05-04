@@ -3,8 +3,8 @@
  * Handles doctor scheduling and availability logic
  */
 
-import { DOCTOR_AVAILABILITY } from "./data";
-import { generateTimeSlots, getDayOfWeekInTimezone } from "../utils/timeSlotUtils";
+import { DOCTOR_AVAILABILITY, doctorsData } from "./data";
+import { generateTimeSlots, getDayOfWeekInTimezone, formatTimeList, markBookedSlots } from "../utils/timeSlotUtils";
 
 /**
  * Get available time slots for a doctor on a specific date
@@ -35,4 +35,34 @@ export const getAvailableSlotsForDoctor = (doctorName, dateString) => {
   });
 
   return allSlots;
+};
+
+/**
+ * Get all doctors
+ * @returns {array} List of all doctors
+ */
+export const getAllDoctors = () => {
+  return doctorsData;
+};
+
+/**
+ * Get available time slots with booked status for a doctor
+ * @param {string} doctorName - Doctor's name
+ * @param {string} dateString - Date in YYYY-MM-DD format
+ * @param {array} bookedAppointments - List of booked appointments
+ * @returns {array} Time slots with booked status
+ */
+export const getAvailableTimeSlotsWithBookedStatus = (
+  doctorName,
+  dateString,
+  bookedAppointments = []
+) => {
+  try {
+    const availableSlots = getAvailableSlotsForDoctor(doctorName, dateString);
+    const formattedSlots = formatTimeList(availableSlots);
+    return markBookedSlots(formattedSlots, bookedAppointments, doctorName, dateString);
+  } catch (error) {
+    console.error("Error fetching time slots with booked status:", error);
+    return [];
+  }
 };

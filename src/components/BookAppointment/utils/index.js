@@ -4,4 +4,4 @@
 export {
   getAllDoctors,
   getAvailableTimeSlotsWithBookedStatus,
-} from "./availableTimeSlot";
+} from "../../mock/DoctorAvailability";

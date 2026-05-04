@@ -19,9 +19,9 @@ export const BookAppointmentProvider = ({ children }) => {
   const persistBookingsToStorage = useCallback(async (appointments) => {
     try {
       await AsyncStorage.setItem(BOOKINGS_KEY, JSON.stringify(appointments));
-      console.log("✅ Bookings persisted to AsyncStorage");
+      console.log(" Bookings persisted to AsyncStorage");
     } catch (error) {
-      console.error("❌ Failed to persist bookings:", error);
+      console.error("Failed to persist bookings:", error);
     }
   }, []);
 
@@ -33,10 +33,10 @@ export const BookAppointmentProvider = ({ children }) => {
       if (storedBookings) {
         const parsedBookings = JSON.parse(storedBookings);
         setBookedAppointments(parsedBookings);
-        console.log("✅ Loaded", parsedBookings.length, "bookings from AsyncStorage");
+        console.log(" Loaded", parsedBookings.length, "bookings from AsyncStorage");
       }
     } catch (error) {
-      console.error("❌ Failed to load bookings from AsyncStorage:", error);
+      console.error(" Failed to load bookings from AsyncStorage:", error);
     } finally {
       setIsLoading(false);
     }

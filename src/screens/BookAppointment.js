@@ -124,7 +124,7 @@ export default function BookAppointment({ route, navigation }) {
       // Save to context - handles AsyncStorage persistence automatically
       saveAppointment(newAppointment);
       
-      console.log("✅ Appointment booked successfully");
+      console.log("Appointment booked successfully");
 
       // Show success and navigate
       Alert.alert("Success", "Your appointment has been booked successfully!", [

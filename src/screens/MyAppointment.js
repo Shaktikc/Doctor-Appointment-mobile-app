@@ -78,9 +78,9 @@ const MyAppointment = ({ navigation }) => {
               // Cancel appointment - context handles AsyncStorage persistence
               cancelAppointment(appointment.id);
               Alert.alert("Cancelled", "Your appointment has been cancelled.");
-              console.log("✅ Appointment cancelled");
+              console.log("Appointment cancelled");
             } catch (error) {
-              console.error("❌ Error cancelling appointment:", error);
+              console.error(" Error cancelling appointment:", error);
               Alert.alert("Error", "Failed to cancel appointment");
             }
           },
@@ -158,13 +158,13 @@ const MyAppointment = ({ navigation }) => {
                     {appointment.specialization} Specialist
                   </Text>
                   <Text style={styles.appointmentInfo}>
-                    📅 {appointment.appointmentDate}
+                     {appointment.appointmentDate}
                   </Text>
                   <Text style={styles.appointmentInfo}>
-                    ⏰ {appointment.appointmentTime}
+                    {appointment.appointmentTime}
                   </Text>
                   <Text style={styles.appointmentInfo}>
-                    📍 {appointment.location}
+                     {appointment.location}
                   </Text>
                 </View>
                 <TouchableOpacity

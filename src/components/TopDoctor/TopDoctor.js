@@ -9,7 +9,7 @@ import {
 import React from "react";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
-import { getAllDoctors } from "../../services/doctorService";
+import { getAllDoctors } from "../../services";
 
 /**
  * TopDoctor Component

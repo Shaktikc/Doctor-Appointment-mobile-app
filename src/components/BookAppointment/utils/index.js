@@ -1,4 +1,7 @@
 /**
  * BookAppointment Component Utilities Exports
  */
-export { getAvailableTimeSlotsWithBookedStatus } from "../../../services";
+export {
+  getAllDoctors,
+  getAvailableTimeSlotsWithBookedStatus,
+} from "./appointmentService";

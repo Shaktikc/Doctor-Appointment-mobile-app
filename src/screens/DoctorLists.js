@@ -9,7 +9,7 @@ import {
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
-import { getAllDoctors } from "../services/doctorService";
+import { getAllDoctors } from "../services";
 import { ViewDoctorButton } from "../components";
 
 /**

@@ -3,7 +3,7 @@
  * Handles doctor scheduling and availability logic
  */
 
-import { DOCTOR_AVAILABILITY, doctorsData } from "./data";
+import { doctorDataWithSchedule, doctorsData } from "./data";
 
 /**
  * Generate time slots between two times with 30-minute intervals
@@ -88,7 +88,7 @@ export const markBookedSlots = (timeList, bookedAppointments, doctorName, appoin
  * @returns {array} Array of available time slots
  */
 export const getAvailableSlotsForDoctor = (doctorName, dateString) => {
-  const doctor = DOCTOR_AVAILABILITY.find((d) => d.name === doctorName);
+  const doctor = doctorDataWithSchedule.find((d) => d.name === doctorName);
   if (!doctor) return [];
 
   const dayOfWeek = getDayOfWeekInTimezone(dateString, doctor.timezone);

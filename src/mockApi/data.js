@@ -94,7 +94,7 @@ export const doctorsData = [
  * Doctor Availability Configuration
  * Defines working hours and timezone for each doctor
  */
-export const DOCTOR_AVAILABILITY = [
+export const doctorDataWithSchedule = [
   {
     name: "Christy Schumm",
     timezone: "Australia/Sydney",

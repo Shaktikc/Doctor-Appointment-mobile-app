@@ -1,6 +1,6 @@
 # 🏥 Doctor Appointment Booking App
 
-A React Native + Expo mobile app for browsing doctors, viewing 30-minute availability slots, and booking appointments with local persistence.
+A React Native + Expo mobile app for browsing doctors, viewing 30-minute availability slots, and booking appointments.
 
 ---
 

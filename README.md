@@ -301,4 +301,4 @@ MIT — free to use and modify for learning purposes.
 
 ---
 
-**Built with 💚 for the ShiftCare Technical Challenge**
+

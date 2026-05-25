@@ -1,4 +1,4 @@
-# 🏥 Doctor Appointment Booking App — ShiftCare Technical Challenge
+# 🏥 Doctor Appointment Booking App
 
 A React Native + Expo mobile app for browsing doctors, viewing 30-minute availability slots, and booking appointments with local persistence.
 
@@ -6,7 +6,7 @@ A React Native + Expo mobile app for browsing doctors, viewing 30-minute availab
 
 ## ✨ Features
 
-- Browse all active doctors fetched from the ShiftCare API
+- Browse all active doctors fetched from the  API
 - View 30-minute appointment slots generated from doctor schedules
 - Book, confirm, and cancel appointments
 - Double-booking prevention (per doctor and per time slot)
